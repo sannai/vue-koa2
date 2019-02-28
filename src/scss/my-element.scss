@@ -1,0 +1,18 @@
+/*
+my-display 水平/垂直居中
+my-svg 大小颜色
+*/
+
+@mixin my-display($justify-content:center,$align-items:center,$display:flex) {
+    justify-content: $justify-content;
+    align-items: $align-items;
+    display: $display;
+}
+
+@mixin my-svg($fill:#ccc,$height:26px,$width:26px) {
+    svg{
+        width: $width;
+        height: $height;
+        fill: $fill;
+    }
+}
