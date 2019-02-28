@@ -1,7 +1,8 @@
 # vue-koa2
 预览地址http://www.zzp96.cn/#/index
+
 使用Vue+node+Koa2+MongoDB+Mongoose+WebPack
-合适练习
+
 安装vue，node环境就能使用（因为我还在开发过程哈哈哈）
 
 最初想法：熟悉前后端端开发（本人技术不好只能多学习）
