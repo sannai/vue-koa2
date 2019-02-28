@@ -1,4 +1,7 @@
 # vue-koa2
+预览地址http://www.zzp96.cn/#/index
+安装环境就能使用
+合适练习
 
 > A Vue.js project
 
