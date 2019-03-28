@@ -1,39 +1,44 @@
 <template>
-  <!-- 富文本上传 -->
-  <div class="add-artcle-details">
-    <div class="box">
-      <el-input placeholder="标题" v-model="label"></el-input>
-      <el-button size="mini" @click="handleLabel">新增标签</el-button>
-
-
-      <el-input placeholder="标题" v-model="article.title"></el-input>
-      <div>
-        简介
-        <el-upload class="avatar-uploader" :action="domain" :data="qiniuForm" :show-file-list="false" :on-success="uploadEditorSuccess" :on-error="uploadEditorError" :before-upload="beforeEditorUpload">
-        </el-upload>
-        <quill-editor class="editor" @focus="onEditorFocus('introduction')" v-model="article.introduction" ref="introduction" :options="editorOption">
-        </quill-editor>
-      </div>
-      <div>
-        内容
-        <el-upload class="avatar-uploader" ref="content" :action="domain" :data="qiniuForm" :show-file-list="false" :on-success="uploadEditorSuccess" :on-error="uploadEditorError" :before-upload="beforeEditorUpload">
-        </el-upload>
-        <quill-editor class="editor" @focus="onEditorFocus('content')" v-model="article.content" ref="content" :options="editorOption2">
-        </quill-editor>
-      </div>
-    </div>
-    <div class="funct">
-      <el-button type="success" plain @click="handleClickSave">发布文章</el-button>
-    </div>
-  </div>
+    <!-- 富文本上传 -->
+    <section class="add-artcle-details">
+        <!-- <el-input placeholder="标题" v-model="label"></el-input>
+                <el-button size="mini" @click="handleLabel">新增标签</el-button> -->
+        <el-form label-width="80px">
+            <el-form-item label="标题">
+                <el-input placeholder="请输入内容" v-model="article.title"></el-input>
+            </el-form-item>
+            <el-form-item label="大图">
+                <el-upload class="avatar-uploader" :action="domain" :data="qiniuForm" :show-file-list="false" :on-success="uploadEditorSuccess" :on-error="uploadEditorError" :before-upload="beforeEditorUpload">
+                </el-upload>
+                <quill-editor class="editor" @focus="onEditorFocus('introduction')" v-model="article.introduction" ref="introduction" :options="editorOption">
+                </quill-editor>
+            </el-form-item>
+            <el-form-item label="内容">
+                <el-upload class="avatar-uploader" ref="content" :action="domain" :data="qiniuForm" :show-file-list="false" :on-success="uploadEditorSuccess" :on-error="uploadEditorError" :before-upload="beforeEditorUpload">
+                </el-upload>
+                <quill-editor class="editor" @focus="onEditorFocus('content')" v-model="article.content" ref="content" :options="editorOption2">
+                </quill-editor>
+            </el-form-item>
+        </el-form>
+        <div class="funct">
+            <el-button type="success" plain @click="handleClickSave">发布文章</el-button>
+        </div>
+    </section>
 </template>
 
 <script>
-import { postAddArticle, getIndexToken, postAddLabel } from "@/api/main.js";
+import {
+    postAddArticle,
+    getIndexToken,
+    postAddLabel,
+    getArtcleDetails
+} from "@/api/main.js";
 import { quillEditor } from "vue-quill-editor";
 import imageUrl from "../../images/1.png";
 //自定义编辑器的工作条
-const toolbarOptions = [
+const toolbarOptions = [["image"]];
+//自定义编辑器的工作条
+const toolbarOptions2 = [
     ["bold", "italic", "underline", "strike"], // toggled buttons
     ["blockquote", "code-block"],
 
@@ -42,12 +47,8 @@ const toolbarOptions = [
     [{ script: "sub" }, { script: "super" }], // superscript/subscript
     [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
     [{ direction: "rtl" }], // text direction
-
-    [{ size: ["small", false, "large", "huge"] }], // custom dropdown
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
     [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-    [{ font: [] }],
     [{ align: [] }],
     ["link", "image", "video"],
     ["clean"] // remove formatting button
@@ -84,7 +85,7 @@ export default {
                 placeholder: "文章内容",
                 modules: {
                     toolbar: {
-                        container: toolbarOptions, // 工具栏
+                        container: toolbarOptions2, // 工具栏
                         handlers: {
                             image: function(value) {
                                 if (value) {
@@ -107,17 +108,20 @@ export default {
             },
             domain: "http://upload.qiniup.com", //华北地址
             uploadUrl: "http://v.zzp96.cn", //存储对象地址
-            label: ''
+            label: ""
         };
     },
     created() {
         this.qiniuForm.uploadUrl = this.uploadUrl;
         this.qiniuForm.key =
             new Date().getTime() + "" + Math.floor(Math.random() * 1000);
-        getIndexToken(this);
+        if (this.$route.params.id) {
+            getArtcleDetails(this, this.$route.params.id);
+        } else {
+            getIndexToken(this);
+        }
     },
     methods: {
-        
         handleLabel() {
             let data = {
                 name: this.label
@@ -185,21 +189,23 @@ export default {
 
 <style lang="scss">
 .add-artcle-details {
-  max-width: 1170px;
-  padding: 20px 0;
-  margin: 0px auto;
-  display: flex;
-  min-height: 798px;
-  background-color: #fff;
-  .box {
-    .el-input {
-      margin-bottom: 10px;
+    box-sizing: border-box;
+    display: flex;
+    height: calc(100vh - 180px);
+    width: 1170px;
+    padding: 20px 0;
+    margin: 20px auto;
+    background-color: #fff;
+    .el-form {
+        flex: 1;
+        margin-right: 20px;
     }
-  }
-  .funct {
-    position: fixed;
-    right: 0;
-    top: 50%;
-  }
+    .funct {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: calc(100vh - 180px);
+        margin-top: -50px;
+    }
 }
 </style>

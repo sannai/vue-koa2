@@ -21,13 +21,18 @@ router.get("/", async ctx => {
                 __v: 0,
                 content: 0
             }
+        },
+        {
+            $sort: {
+                createDate: -1
+            }
         }
     ]).exec().then((val) => {
         val.forEach((item, index) => {
             item.commentList.forEach(t => {
                 item.commentNumber = t.content.length;
-
             });
+            delete item.commentList;
         });
         ctx.body = { success: 200, message: val };
     });
@@ -60,67 +65,6 @@ router.get("/article-details/:id", async ctx => {
         });;
 });
 
-//详情-评论
-router.get("/article-details/comment/:id", async ctx => {
-    let article = mongoose.model("comment");
-    let page = Number(ctx.query.page);
-    let limit = Number(ctx.query.limit);
-    let data = [];
-    let totalData = await article.find({aticleId: ctx.params.id}).populate({
-        path: 'content', //对应auditOpinion表 设置字段
-        populate: { path: 'content' }
-    });
-    let total = totalData[0].content.length;
-    await article.aggregate([
-        {
-            $match: { aticleId: mongoose.Types.ObjectId(ctx.params.id) }
-        },
-        {
-            $unwind: "$content"
-        },
-        {
-            $skip: (page-1)*limit
-        },
-        {
-            $limit: limit
-        }
-    ]).then(res => {
-        ctx.body = {
-            code: 200,
-            message: {
-                data: res,
-                pageing: {
-                    total,
-                    page,
-                    limit
-                }
-            }
-        };
-    });
-    
-
-    // await article.aggregate([
-    //     {
-    //         $match: { aticleId: mongoose.Types.ObjectId(ctx.params.id) }
-    //     },
-    //     {
-    //         $project: {
-    //             __v: 0
-    //         }
-    //     }
-    // ]).exec().then((val) => {
-    //     ctx.body = { success: 200, message: val };
-    // }).catch(err => {
-    //     ctx.body = {
-    //         code: 500,
-    //         message: {
-    //             data: err,
-    //             text: '获取失败'
-    //         }
-    //     };
-    // });;
-});
-
 //新增
 router.post("/add-article", async (ctx) => {
     let addArticle = mongoose.model("articleList");
@@ -146,6 +90,84 @@ router.post("/add-article", async (ctx) => {
         });
 });
 
+//删除
+router.post("/delete-article/:id", async (ctx) => {
+    let addArticle = mongoose.model("articleList");
+    let comment = mongoose.model("comment");
+    await addArticle.remove({ _id: ctx.params.id })
+        .then(async (res) => {
+            await comment.remove({ aticleId: ctx.params.id });
+            ctx.body = {
+                code: 200,
+                message: '删除成功'
+            };
+        }).catch(error => {
+            ctx.body = {
+                code: 500,
+                message: error
+            };
+        });
+});
+
+//修改
+router.get("/article-details/:id", async ctx => {
+    let article = mongoose.model("articleList");
+    //关联查询
+    await article.aggregate([
+        {
+            $match: { _id: mongoose.Types.ObjectId(ctx.params.id) }
+        },
+        {
+            $project: {
+                __v: 0
+            }
+        }]);
+});
+
+//详情-评论
+router.get("/article-details/comment/:id", async ctx => {
+    let article = mongoose.model("comment");
+    let page = Number(ctx.query.page);
+    let limit = Number(ctx.query.limit);
+    let data = [];
+    let totalData = await article.find({ aticleId: ctx.params.id }).populate({
+        path: 'content', //对应auditOpinion表 设置字段
+        populate: { path: 'content' }
+    });
+    let total = totalData[0].content.length;
+    await article.aggregate([
+        {
+            $match: { aticleId: mongoose.Types.ObjectId(ctx.params.id) }
+        },
+        {
+            $unwind: "$content"
+        },
+        {
+            $sort: {
+                "content.commentDate": -1
+            }
+        },
+        {
+            $skip: (page - 1) * limit
+        },
+        {
+            $limit: limit
+        }
+    ]).then(res => {
+        ctx.body = {
+            code: 200,
+            message: {
+                data: res,
+                pageing: {
+                    total,
+                    page,
+                    limit
+                }
+            }
+        };
+    });
+});
+
 //评论-新增
 router.post("/add-comment/:id", async (ctx) => {
     let comment = mongoose.model("comment");
@@ -155,7 +177,7 @@ router.post("/add-comment/:id", async (ctx) => {
         $push: {
             content: ctx.request.body
         }
-    }).then(res => {
+    }).then(async res => {
         ctx.body = {
             code: 200,
             message: {

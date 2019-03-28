@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Main from '@/pages/main';
 import ArtcleDetails from '@/pages/main/artcle-details';
 import AddArticle from '@/pages/main/add-article';
+import ArticleList from '@/pages/main/article-list';
 import ChatIndex from '@/pages/chatroom';
 import MessageBoard from '@/pages/message-board';
 import Classify from '@/pages/classify';
@@ -39,6 +40,16 @@ export default new Router({
             path: '/message-board',
             name: 'messageBoard',
             component: MessageBoard
+        },
+        {
+            path: '/article/list',
+            name: 'article-list',
+            component: ArticleList
+        },
+        {
+            path: '/article/edit/:id',
+            name: 'article-edit',
+            component: AddArticle
         },
         {
             path: '/chat',

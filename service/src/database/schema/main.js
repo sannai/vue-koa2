@@ -41,11 +41,15 @@ const commentSchema = new Schema({
             commentContent: String,
             commentPid: Schema.Types.ObjectId,
             commentDate: {
-                type: Date, default: new Date()
+                type: Date, default: Date.now
             },
             hierarchy: {
                 type: Number,
                 default: 1
+            },
+            count: {
+                type: Number,
+                default: 0
             }
         }
     ],

@@ -1,16 +1,16 @@
 <template>
-  <article class="sidebar-right">
-    <div class="title">
-      <h3>最新评论</h3>
-      <p>更多留言</p>
-    </div>
-    <ul>
-      <li v-for="item in latelyComment" :key="item.id" class="lately-comment-list">
-        <p class="name">{{item.name}}</p>
-        <p class="content">{{item.content}}</p>
-      </li>
-    </ul>
-  </article>
+    <article class="sidebar-right">
+        <header class="title">
+            <h3>最新评论</h3>
+            <p>更多留言</p>
+        </header>
+        <ul>
+            <li v-for="item in latelyComment" :key="item.id" class="lately-comment-list">
+                <p class="name">{{item.name}}</p>
+                <p class="content">{{item.content}}</p>
+            </li>
+        </ul>
+    </article>
 </template>
 
 <script>
@@ -52,33 +52,33 @@ export default {
 
 <style  lang='scss'>
 .sidebar-right {
-  width: 259px;
-  margin-left: 40px;
-  .title {
-    padding: 10px;
-    background-color: #fafafa;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  ul {
-    background-color: #fff;
-    .lately-comment-list {
-      border-bottom: 1px solid #ccc;
-      padding: 6px 10px;
-      .name {
-        color: #333;
-        font-size: 14px;
-      }
-      .content {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        font-size: 12px;
-        height: 24px;
-        line-height: 24px;
-      }
+    width: 259px;
+    margin-left: 40px;
+    .title {
+        padding: 10px;
+        background-color: #fafafa;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
-  }
+    ul {
+        background-color: #fff;
+        .lately-comment-list {
+            border-bottom: 1px solid #ccc;
+            padding: 6px 10px;
+            .name {
+                color: #333;
+                font-size: 14px;
+            }
+            .content {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-size: 12px;
+                height: 24px;
+                line-height: 24px;
+            }
+        }
+    }
 }
 </style>

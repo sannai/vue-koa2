@@ -1,8 +1,8 @@
 <template>
-  <main class="main">
-    <sidebar-left :articleList='articleList'></sidebar-left>
-    <sidebar-right></sidebar-right>
-  </main>
+    <main class="main">
+        <sidebar-left :articleList='articleList'></sidebar-left>
+        <sidebar-right></sidebar-right>
+    </main>
 </template>
 
 <script>
@@ -31,9 +31,9 @@ export default {
 
 <style  lang='scss'>
 .main {
-  display: flex;
-  min-height: 758px;
-  max-width: 1170px;
-  margin: 20px auto;
+    display: flex;
+    height: calc(100vh - 180px);
+    max-width: 1170px;
+    margin: 20px auto;
 }
 </style>

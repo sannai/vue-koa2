@@ -19,7 +19,7 @@ const getArtcleDetails = (that, id) => {
         method: 'get',
         url: `/index/article-details/${id}`
     }, (response) => {
-        that.artcleDetails = response.data.message;
+        that.article = response.data.message[0];
     }, (error) => {
     });
 };
@@ -44,6 +44,17 @@ const postAddArticle = (that, data) => {
         url: `/index/add-article`,
         params: data
     }, (response) => {
+    }, (error) => {
+    });
+};
+
+//文章-删除
+const postDeletArticle = (that, id) => {
+    Http({
+        method: 'post',
+        url: `/index/delete-article/${id}`
+    }, (response) => {
+        getArticleList(that);
     }, (error) => {
     });
 };
@@ -91,6 +102,7 @@ export {
     getArtcleDetails,
     getComment,
     postAddArticle,
+    postDeletArticle,
     postAddComment,
     postAddLabel,
     getIndexToken

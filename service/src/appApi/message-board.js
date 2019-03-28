@@ -9,6 +9,11 @@ router.get("/index", async (ctx) => {
     let total = await messageBoard.find().count();
     await messageBoard.aggregate([
         {
+            $sort: {
+                "createDate": -1
+            }
+        },
+        {
             $skip: (page-1)*limit
         },
         {

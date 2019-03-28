@@ -1,26 +1,20 @@
 <template>
-  <main>
-    <div class="artcle-details">
-      <section class="left">
-        <el-card shadow="always" v-for="item in artcleDetails" :key="item.articleId">
-          <div class="card-box">
-            <div style="padding: 14px;">
-              <div class="entry-title">{{item.title}}</div>
-              <div class="tag-label">
-                <el-tag type="success" v-for="t in item.knowledge" :key="t.id">{{t.name}}</el-tag>
-              </div>
-              <div class="introduction" v-html="item.introduction"></div>
-              <h3>内容区</h3>
-              <div class="article-ontent" v-html="item.content"></div>
-            </div>
-          </div>
-        </el-card>
-        <comment-area :commentList="commentList" :commentListPage="commentListPage" @handleAddMessageBoard="handleAddMessageBoard" @handleCurrentChange="handleCurrentChange" :title="'留言'"></comment-area>
-      </section>
-      <sidebar-right></sidebar-right>
-    </div>
-    <back-to-top></back-to-top>
-  </main>
+    <main class="artcle-details">
+        <section class="left">
+            <el-card shadow="always">
+                <h3 class="entry-title">{{article.title}}</h3>
+                <div class="tag-label">
+                    <el-tag type="success" v-for="item in article.knowledge" :key="item.id">{{item.name}}</el-tag>
+                </div>
+                <div class="introduction" v-html="article.introduction"></div>
+                <h3>内容区</h3>
+                <div class="article-ontent" v-html="article.content"></div>
+            </el-card>
+            <comment-area :commentList="commentList" :commentListPage="commentListPage" @handleAddMessageBoard="handleAddMessageBoard" @handleCurrentChange="handleCurrentChange" :title="'留言'"></comment-area>
+        </section>
+        <sidebar-right></sidebar-right>
+        <back-to-top></back-to-top>
+    </main>
 
 </template>
 
@@ -33,7 +27,7 @@ import CommentArea from "@/components/comment-area";
 export default {
     data() {
         return {
-            artcleDetails: [],
+            article: [],
             commentList: [],
             commentListPage: {
                 page: 1,
@@ -65,7 +59,7 @@ export default {
     methods: {
         //提交
         handleAddMessageBoard(data) {
-            postAddComment(this, this.artcleDetails[0]._id, data, this.page);
+            postAddComment(this, this.article._id, data, this.page);
         },
         //分页
         handleCurrentChange(val) {
@@ -97,10 +91,10 @@ export default {
                 let translator = (parents, children) => {
                     //遍历父节点数据
                     parents.forEach((parent, index) => {
-                        Object.assign(parent, {...parent.content});
+                        Object.assign(parent, { ...parent.content });
                         //遍历子节点数据
                         children.forEach((current, index) => {
-                            Object.assign(current, {...current.content});
+                            Object.assign(current, { ...current.content });
                             //此时找到父节点对应的一个子节点
                             if (current.commentPid === parent._id) {
                                 //对子节点数据进行深复制，这里只支持部分类型的数据深复制，对深复制不了解的童靴可以先去了解下深复制
@@ -136,86 +130,86 @@ export default {
 <style lang="scss">
 @import "../../scss/my-element.scss";
 .artcle-details {
-  max-width: 1170px;
-  display: flex;
-  margin: 20px auto;
-  min-height: 758px;
-  .left {
-    width: 871px;
-    .entry-title {
-      font-size: 30px;
-      font-weight: 500;
-      margin-bottom: 20px;
-    }
-    .introduction {
-      img {
-        width: 100%;
-        margin: 10px 0;
-      }
-    }
-    .el-card {
-      margin-bottom: 20px;
-      .card-box {
-        .article-ontent {
-          color: #333;
-          font-size: 16px;
-          font-family: Hiragino Sans GB;
-          text-indent: 2em;
-          line-height: 28px;
+    max-width: 1170px;
+    display: flex;
+    margin: 20px auto;
+    min-height: 758px;
+    .left {
+        width: 871px;
+        .entry-title {
+            font-size: 30px;
+            font-weight: 500;
+            margin-bottom: 20px;
         }
-        h3 {
-          text-align: center;
-          padding: 30px 0;
-          font-size: 20px;
-          color: #444;
+        .introduction {
+            img {
+                width: 100%;
+                margin: 10px 0;
+            }
         }
-      }
-    }
-    .comment {
-      margin-bottom: 30px;
-      .title {
-        height: 40px;
-        line-height: 40px;
-        padding: 0 10px;
-        background-color: #fafafa;
-        font-size: 16px;
-        @include my-display(space-between);
-      }
-      .content {
-        padding-bottom: 30px;
-        background-color: #fff;
-        .comment-box {
-          .comment-name {
-            font-size: 16px;
-            padding: 10px 0;
-          }
-          .comment-content {
-            font-size: 14px;
-          }
-          .lately-children {
-            margin-left: 20px;
-            border-bottom: 1px solid #ccc;
-            padding: 6px 10px;
-            @include my-display(space-between);
-          }
-          .lately-list {
-            border-bottom: 1px solid #ccc;
-            @include my-display(space-between);
-            padding: 16px 10px;
-          }
-          .reply {
-            text-align: center;
-            height: 43px;
-            line-height: 43px;
-            width: 60px;
-            cursor: pointer;
-          }
+        .el-card {
+            margin-bottom: 20px;
+            .card-box {
+                .article-ontent {
+                    color: #333;
+                    font-size: 16px;
+                    font-family: Hiragino Sans GB;
+                    text-indent: 2em;
+                    line-height: 28px;
+                }
+                h3 {
+                    text-align: center;
+                    padding: 30px 0;
+                    font-size: 20px;
+                    color: #444;
+                }
+            }
         }
-      }
+        .comment {
+            margin-bottom: 30px;
+            .title {
+                height: 40px;
+                line-height: 40px;
+                padding: 0 10px;
+                background-color: #fafafa;
+                font-size: 16px;
+                @include my-display(space-between);
+            }
+            .content {
+                padding-bottom: 30px;
+                background-color: #fff;
+                .comment-box {
+                    .comment-name {
+                        font-size: 16px;
+                        padding: 10px 0;
+                    }
+                    .comment-content {
+                        font-size: 14px;
+                    }
+                    .lately-children {
+                        margin-left: 20px;
+                        border-bottom: 1px solid #ccc;
+                        padding: 6px 10px;
+                        @include my-display(space-between);
+                    }
+                    .lately-list {
+                        border-bottom: 1px solid #ccc;
+                        @include my-display(space-between);
+                        padding: 16px 10px;
+                    }
+                    .reply {
+                        text-align: center;
+                        height: 43px;
+                        line-height: 43px;
+                        width: 60px;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+        .el-textarea__inner {
+            min-height: 100px !important;
+        }
     }
-    .el-textarea__inner {
-      min-height: 100px !important;
-    }
-  }
 }
 </style>

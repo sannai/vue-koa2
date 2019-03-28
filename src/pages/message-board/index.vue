@@ -1,25 +1,23 @@
 <template>
-  <!-- 留言板 -->
-  <main class="message-board">
-    <section class="left">
-      <header class="entry-header">
-        <h2>留言板</h2>
-      </header>
-      <div class="entry-content">
-        <p>
-          <img src="../../images/With-love-for-life.jpg" alt="" width="100%">
-        </p>
-        <p class="text">
-          本小站记录了我在学习中遇到的一些困难，及用到的解决方法，
-          很多方法来源于网络，在文章最后都指出了来源。
-          如果有版权等方面的问题，
-          请与我联系！
-        </p>
-      </div>
-      <comment-area :commentList="commentList" :commentListPage="commentListPage" @handleAddMessageBoard="handleAddMessageBoard" @handleCurrentChange="handleCurrentChange" :title="'留言'"></comment-area>
-    </section>
-    <sidebar-right></sidebar-right>
-  </main>
+    <!-- 留言板 -->
+    <main class="message-board">
+        <section class="left">
+            <h2 class="entry-header">留言板</h2>
+            <div class="entry-content">
+                <p>
+                    <img src="../../images/With-love-for-life.jpg" alt="" width="100%">
+                </p>
+                <p class="text">
+                    本小站记录了我在学习中遇到的一些困难，及用到的解决方法，
+                    很多方法来源于网络，在文章最后都指出了来源。
+                    如果有版权等方面的问题，
+                    请与我联系！
+                </p>
+            </div>
+            <comment-area :commentList="commentList" :commentListPage="commentListPage" @handleAddMessageBoard="handleAddMessageBoard" @handleCurrentChange="handleCurrentChange" :title="'留言'"></comment-area>
+        </section>
+        <sidebar-right></sidebar-right>
+    </main>
 </template>
 
 <script>
@@ -50,7 +48,7 @@ export default {
     methods: {
         //提交
         handleAddMessageBoard(data) {
-            postAddMessageBoard(this, data, '留言', this.page);
+            postAddMessageBoard(this, data, "留言", this.page);
         },
         //分页
         handleCurrentChange(val) {
@@ -120,39 +118,37 @@ export default {
 <style lang="scss">
 @import "../../scss/my-element.scss";
 .message-board {
-  max-width: 1170px;
-  margin: 20px auto;
-  display: flex;
-  .left {
-    flex: 1;
-    background-color: #fff;
-    border: 1px solid #ededed;
-    .entry-header {
-      h2 {
-        color: #333;
-        font-size: 20px;
-        text-align: center;
-        margin: 20px 0;
-      }
+    max-width: 1170px;
+    margin: 20px auto;
+    display: flex;
+    .left {
+        flex: 1;
+        background-color: #fff;
+        border: 1px solid #ededed;
+        .entry-header {
+            color: #333;
+            font-size: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .entry-content {
+            padding: 0 20px;
+            .text {
+                text-indent: 2em;
+                margin: 20px 0;
+                font-size: 16px;
+                line-height: 1.8;
+            }
+        }
+        .entry-footer {
+            .pagination {
+                margin-top: 20px;
+                text-align: center;
+            }
+            .el-textarea__inner {
+                min-height: 100px !important;
+            }
+        }
     }
-    .entry-content {
-      padding: 0 20px;
-      .text {
-        text-indent: 2em;
-        margin: 20px 0;
-        font-size: 16px;
-        line-height: 1.8;
-      }
-    }
-    .entry-footer {
-      .pagination {
-        margin-top: 20px;
-        text-align: center;
-      }
-      .el-textarea__inner {
-        min-height: 100px !important;
-      }
-    }
-  }
 }
 </style>

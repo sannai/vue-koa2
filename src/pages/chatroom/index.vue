@@ -1,29 +1,29 @@
 <template>
-  <!-- 聊天室 -->
-  <div>
-    <div class="login-wrap" v-show="!isShow">
-      <div class="login-con">
-        <h3>用户登录</h3>
-        <input v-model="loginName" type="text" placeholder="请输入昵称">
-        <button class="login-btn" @click="handleClick('登录')">登录</button>
-      </div>
-    </div>
-    <div class="chat-wrap" v-show="isShow">
-      <h1>多人聊天室</h1>
-      <div class="chat-con clearfix">
-        {{htmlValue}}
-      </div>
-      <div class="bottom">
-        <div>
-          <div v-for="(item, index) in htmldata" :key="index">
-            <div v-html="item"></div>
-          </div>
+    <!-- 聊天室 -->
+    <main>
+        <div class="login-wrap" v-show="!isShow">
+            <div class="login-con">
+                <h3>用户登录</h3>
+                <input v-model="loginName" type="text" placeholder="请输入昵称">
+                <button class="login-btn" @click="handleClick('登录')">登录</button>
+            </div>
         </div>
-        <el-input type="text" id="sendtxt" v-model="text"></el-input>
-        <el-button class="sendBtn" @click="handleClick('发送')">发送</el-button>
-      </div>
-    </div>
-  </div>
+        <div class="chat-wrap" v-show="isShow">
+            <h1>多人聊天室</h1>
+            <div class="chat-con clearfix">
+                {{htmlValue}}
+            </div>
+            <div class="bottom">
+                <div>
+                    <div v-for="(item, index) in htmldata" :key="index">
+                        <div v-html="item"></div>
+                    </div>
+                </div>
+                <el-input type="text" id="sendtxt" v-model="text"></el-input>
+                <el-button class="sendBtn" @click="handleClick('发送')">发送</el-button>
+            </div>
+        </div>
+    </main>
 </template>
 
 <script>
@@ -112,32 +112,32 @@ export default {
 
 <style scoped>
 .clearfix:after {
-  content: ".";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }
 .clearfix {
-  *zoom: 1;
+    *zoom: 1;
 }
 .cred {
-  color: #f03e3e;
+    color: #f03e3e;
 }
 .cgreen {
-  color: #459d36;
+    color: #459d36;
 }
 .fr {
-  float: right;
+    float: right;
 }
 .fl {
-  float: left;
+    float: left;
 }
 .rela {
-  position: relative;
+    position: relative;
 }
 .abs {
-  position: absolute;
+    position: absolute;
 }
 /* h1 {
   position: fixed;
@@ -154,87 +154,87 @@ export default {
 
 /*登录界面*/
 .login-wrap {
-  background: #e7e7e7;
-  width: 100%;
-  height: 100%;
-  text-align: center;
+    background: #e7e7e7;
+    width: 100%;
+    height: 100%;
+    text-align: center;
 }
 .login-con {
-  padding-top: 50px;
+    padding-top: 50px;
 }
 .login-con h3 {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 .login-con input {
-  width: 60%;
-  display: block;
-  margin: 0 auto;
-  height: 40px;
-  line-height: 40px;
-  margin-bottom: 20px;
+    width: 60%;
+    display: block;
+    margin: 0 auto;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 20px;
 }
 .login-con button {
-  width: 60%;
-  display: block;
-  margin: 0 auto;
-  height: 40px;
-  line-height: 40px;
-  border: none;
-  background: #459d36;
-  color: #fff;
-  border-radius: 5px;
+    width: 60%;
+    display: block;
+    margin: 0 auto;
+    height: 40px;
+    line-height: 40px;
+    border: none;
+    background: #459d36;
+    color: #fff;
+    border-radius: 5px;
 }
 
 /*聊天界面*/
 .chat-wrap {
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  background: #e7e7e7;
-  text-align: center;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    background: #e7e7e7;
+    text-align: center;
 }
 .chat-con {
-  padding: 50px 0;
-  background: #e7e7e7;
+    padding: 50px 0;
+    background: #e7e7e7;
 }
 .chat-con p {
-  display: inline-block;
-  padding: 5px 10px;
-  background: #999;
-  border-radius: 5px;
-  color: #fff;
-  margin: 5px 0;
+    display: inline-block;
+    padding: 5px 10px;
+    background: #999;
+    border-radius: 5px;
+    color: #fff;
+    margin: 5px 0;
 }
 .chat-item {
-  width: 100%;
-  margin-bottom: 20px;
+    width: 100%;
+    margin-bottom: 20px;
 }
 .item-right .message {
-  background: #62b900;
+    background: #62b900;
 }
 .item-left .message {
-  background: #fff;
-  margin-top: 20px;
+    background: #fff;
+    margin-top: 20px;
 }
 .item-left .img {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 .item-left .uname {
-  font-size: 12px;
-  left: 50px;
-  top: 0;
+    font-size: 12px;
+    left: 50px;
+    top: 0;
 }
 .chat-item .message {
-  width: 60%;
-  display: block;
-  padding: 10px;
-  border-radius: 5px;
-  margin-right: 10px;
+    width: 60%;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    margin-right: 10px;
 }
 .chat-item .img {
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  background-size: 100% 100%;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-size: 100% 100%;
 }
 </style>

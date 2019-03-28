@@ -11,7 +11,7 @@ const messageBoardSchema = new Schema({
         type: Number,
         default: 1
     },
-    createDate: { type: Date, default: new Date() }
+    createDate: { type: Date, default: Date.now }
 });
 
 //发布模型

@@ -24,6 +24,10 @@ module.exports = {
     entry: {
         app: './src/main.js'
     },
+    externals: {
+        vue: "Vue",
+        "element-ui": "ElementUI",
+    },
     output: {
         path: config.build.assetsRoot,
         filename: '[name].js',
@@ -64,7 +68,7 @@ module.exports = {
                     {
                         loader: "sass-loader" // 将 Sass 编译成 CSS
                     },
-                    
+
                 ]
             },
             {

@@ -1,15 +1,10 @@
 <template>
-  <header class="header">
-    <div class="nav">
-      <div class="logo" @click="handleClickLogo">
-        <!-- <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-tubiaozhizuo-"></use>
-        </svg> -->
-        <h1>我的博客</h1>
-      </div>
-      <Navbar></Navbar>
-    </div>
-  </header>
+    <header class="headers">
+        <section class="navs">
+            <h1 @click="handleClickLogo">我的博客</h1>
+            <Navbar></Navbar>
+        </section>
+    </header>
 </template>
 
 <script>
@@ -25,7 +20,7 @@ export default {
     methods: {
         handleClickLogo() {
             this.$router.push({
-                path: '/index'
+                path: "/index"
             });
         }
     }
@@ -34,32 +29,22 @@ export default {
 
 <style  lang='scss'>
 @import "../../scss/my-element.scss";
-.header {
-  background-color: #24bebe;
-  position: sticky;
-  top: 0;
-    height: 75px;
-  .nav {
-    margin: 0 auto;
-    max-width: 1170px;
+.headers {
     display: flex;
-    height: 100%;
-    .logo {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      margin-right: 50px;
-      svg {
-        width: 4vw;
-        height: 4vw;
-        fill: #fff;
-      }
-      h1 {
-        font-size: 28px;
-        color: #fff;
-      }
+    height: 75px;
+    background-color: #24bebe;
+    position: sticky;
+    top: 0;
+    .navs {
+        width: 1170px;
+        margin: 20px auto;
+        @include my-display();
+        h1 {
+            font-size: 28px;
+            color: #fff;
+            margin-right: 40px;
+            cursor: pointer;
+        }
     }
-  }
 }
 </style>
