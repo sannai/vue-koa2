@@ -40,7 +40,7 @@ const commentSchema = new Schema({
             commentName: String,
             commentContent: String,
             commentPid: Schema.Types.ObjectId,
-            commentDate: {
+            createDate: {
                 type: Date, default: Date.now
             },
             hierarchy: {

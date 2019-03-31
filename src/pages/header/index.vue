@@ -34,9 +34,10 @@ export default {
     height: 75px;
     background-color: #24bebe;
     position: sticky;
+    z-index: 1;
     top: 0;
     .navs {
-        width: 1170px;
+        width: 1040px;
         margin: 20px auto;
         @include my-display();
         h1 {

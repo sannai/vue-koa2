@@ -10,7 +10,7 @@ const bodyParser = require('koa-bodyparser');
 const cors = require('koa2-cors');
 const staticPath = './static';
 const { connect, initSchemas } = require('./src/database/init');
-const { chat } = require('./src/appApi/chat');
+// const { chat } = require('./src/appApi/chat');
 app.use(bodyParser());
 app.use(cors());
 app.use(statics(

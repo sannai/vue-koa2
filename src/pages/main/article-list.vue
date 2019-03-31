@@ -1,9 +1,9 @@
 <template>
     <main class="articde-main">
         <header class="header">
-            <router-link to="/add-article">
-                <el-button type="primary" icon="el-icon-plus">新增文章</el-button>
-            </router-link>&emsp;
+            <!-- <router-link to="/add-article"> -->
+            <el-button type="primary" icon="el-icon-plus" @click="handleFunct('添加')">新增文章</el-button>&emsp;
+            <!-- </router-link>&emsp; -->
             <el-input placeholder="请输入内容" v-model="input5" class="input-select">
                 <el-button slot="append" icon="el-icon-search"></el-button>
             </el-input>
@@ -18,13 +18,7 @@
 
                 <el-table-column label="类型" width="180" align="center">
                     <template slot-scope="scope">
-                        <ul>
-                            <li v-for="(item, index) in scope.row.knowledge" :key="index">
-                                <el-tag>
-                                    {{item.name}}
-                                </el-tag>
-                            </li>
-                        </ul>
+                        <my-tag v-for="(item, index) in scope.row.knowledge" :key="index">{{item.name}}</my-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="留言(条)" width="180" align="center">
@@ -49,7 +43,8 @@
 </template>
 
 <script>
-import { getArticleList, postDeletArticle } from "@/api/main";
+import { getArticleList, deleteDeletArticle } from "@/api/main";
+import MyTag from "@/components/my-tag";
 export default {
     data() {
         return {
@@ -74,7 +69,7 @@ export default {
                     type: "warning"
                 })
                     .then(() => {
-                        postDeletArticle(this, row._id);
+                        deleteDeletArticle(this, row._id);
                         this.$message({
                             type: "success",
                             message: "删除成功!"
@@ -86,16 +81,28 @@ export default {
                             message: "已取消删除"
                         });
                     });
+            } else if (text === "添加") {
+                this.$router.push({
+                    name: "article-add",
+                    query: {
+                        text: "添加"
+                    }
+                });
             } else if (text === "编辑") {
                 this.$router.push({
                     name: "article-edit",
                     params: {
                         id: row._id
+                    },
+                    query: {
+                        text: "编辑"
                     }
                 });
-                console.log(row, 66);
             }
         }
+    },
+    components: {
+        MyTag
     }
 };
 </script>
@@ -103,9 +110,9 @@ export default {
 <style lang="scss">
 .articde-main {
     box-sizing: border-box;
-    width: 1170px;
+    width: 1040px;
     margin: 20px auto;
-    height: calc(100vh - 180px);
+    min-height: calc(100vh - 180px);
     background-color: #fff;
     padding: 20px;
     .header {
@@ -114,8 +121,6 @@ export default {
         .input-select {
             width: 250px;
         }
-    }
-    .section {
     }
 }
 </style>

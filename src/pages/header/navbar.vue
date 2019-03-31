@@ -18,12 +18,12 @@
                 <el-menu-item index="2-2">CSS</el-menu-item>
                 <el-menu-item index="2-3">JavaScript</el-menu-item>
             </el-submenu>
-            <el-menu-item index="3" class="navbar-list" @click="handleClickToRoute('/chat-room')">
+            <!-- <el-menu-item index="3" class="navbar-list" @click="handleClickToRoute('/chat-room')">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-icon-bid-archive"></use>
                 </svg>
                 <span class="text">聊天室</span>
-            </el-menu-item>
+            </el-menu-item> -->
             <el-menu-item index="4" class="navbar-list" @click="handleClickToRoute('/message-board')">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-liuyan"></use>

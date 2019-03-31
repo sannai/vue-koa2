@@ -91,7 +91,7 @@ router.post("/add-article", async (ctx) => {
 });
 
 //删除
-router.post("/delete-article/:id", async (ctx) => {
+router.delete("/delete-article/:id", async (ctx) => {
     let addArticle = mongoose.model("articleList");
     let comment = mongoose.model("comment");
     await addArticle.remove({ _id: ctx.params.id })
@@ -110,18 +110,26 @@ router.post("/delete-article/:id", async (ctx) => {
 });
 
 //修改
-router.get("/article-details/:id", async ctx => {
+router.put("/edit-article/:id", async (ctx) => {
     let article = mongoose.model("articleList");
+    console.log(ctx.request.body);
     //关联查询
-    await article.aggregate([
-        {
-            $match: { _id: mongoose.Types.ObjectId(ctx.params.id) }
-        },
-        {
-            $project: {
-                __v: 0
+    await article.update({
+        _id: ctx.params.id
+    }, {
+        $set: {
+            title: ctx.request.body.title,
+            content: ctx.request.body.content,
+            introduction: ctx.request.body.introduction
+        }
+    }).then((res) => {
+        ctx.body = {
+            code: 200,
+            message: {
+                text: '修改成功'
             }
-        }]);
+        };
+    });
 });
 
 //详情-评论
@@ -144,7 +152,7 @@ router.get("/article-details/comment/:id", async ctx => {
         },
         {
             $sort: {
-                "content.commentDate": -1
+                "content.createDate": -1
             }
         },
         {

@@ -13,6 +13,18 @@ const getArticleList = (that) => {
     });
 };
 
+//文章-添加
+const postAddArticle = (that, data) => {
+    Http({
+        method: 'post',
+        url: `/index/add-article`,
+        params: data
+    }, (response) => {
+        that.$message.success('添加成功');
+    }, (error) => {
+    });
+};
+
 //文章-详情
 const getArtcleDetails = (that, id) => {
     Http({
@@ -20,6 +32,31 @@ const getArtcleDetails = (that, id) => {
         url: `/index/article-details/${id}`
     }, (response) => {
         that.article = response.data.message[0];
+    }, (error) => {
+    });
+};
+
+//文章-编辑
+const putEditArticle = (that, id, data) => {
+    Http({
+        method: 'put',
+        url: `/index/edit-article/${id}`,
+        params: data
+    }, (response) => {
+        that.$message.success('编辑成功');
+        // getArticleList(that);
+    }, (error) => {
+    });
+};
+
+//文章-删除
+const deleteDeletArticle = (that, id) => {
+    Http({
+        method: 'delete',
+        url: `/index/delete-article/${id}`
+    }, (response) => {
+        that.$message.success('删除成功');
+        getArticleList(that);
     }, (error) => {
     });
 };
@@ -37,28 +74,6 @@ const getComment = (that, id, data) => {
     });
 };
 
-//文章-添加
-const postAddArticle = (that, data) => {
-    Http({
-        method: 'post',
-        url: `/index/add-article`,
-        params: data
-    }, (response) => {
-    }, (error) => {
-    });
-};
-
-//文章-删除
-const postDeletArticle = (that, id) => {
-    Http({
-        method: 'post',
-        url: `/index/delete-article/${id}`
-    }, (response) => {
-        getArticleList(that);
-    }, (error) => {
-    });
-};
-
 //评论-添加
 const postAddComment = (that, id, data, page) => {
     Http({
@@ -66,6 +81,7 @@ const postAddComment = (that, id, data, page) => {
         url: `/index/add-comment/${id}`,
         params: data
     }, (response) => {
+        that.$message.success('评论成功');
         let datas = {
             page,
             limit: 10
@@ -102,7 +118,8 @@ export {
     getArtcleDetails,
     getComment,
     postAddArticle,
-    postDeletArticle,
+    putEditArticle,
+    deleteDeletArticle,
     postAddComment,
     postAddLabel,
     getIndexToken

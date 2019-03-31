@@ -52,8 +52,7 @@ export default {
 
 <style  lang='scss'>
 .sidebar-right {
-    width: 259px;
-    margin-left: 40px;
+    width: 260px;
     .title {
         padding: 10px;
         background-color: #fafafa;

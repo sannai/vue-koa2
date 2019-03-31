@@ -1,9 +1,9 @@
 <template>
-  <section>
-    <Header></Header>
-    <router-view />
-    <Footer></Footer>
-  </section>
+    <section>
+        <Header></Header>
+        <router-view />
+        <Footer></Footer>
+    </section>
 </template>
 
 <script>

@@ -1,20 +1,17 @@
 <template>
-    <main class="artcle-details">
-        <section class="left">
-            <el-card shadow="always">
-                <h3 class="entry-title">{{article.title}}</h3>
-                <div class="tag-label">
-                    <el-tag type="success" v-for="item in article.knowledge" :key="item.id">{{item.name}}</el-tag>
-                </div>
-                <div class="introduction" v-html="article.introduction"></div>
-                <h3>内容区</h3>
-                <div class="article-ontent" v-html="article.content"></div>
-            </el-card>
-            <comment-area :commentList="commentList" :commentListPage="commentListPage" @handleAddMessageBoard="handleAddMessageBoard" @handleCurrentChange="handleCurrentChange" :title="'留言'"></comment-area>
-        </section>
-        <sidebar-right></sidebar-right>
+    <section class="artcle-detail">
+        <a class="item-wrap">
+            <h3 class="title">{{article.title}}</h3>
+            <template v-for="item in article.knowledge">
+                <my-tag type="danger" :key="item.id">{{item.name}}</my-tag>
+            </template>
+            <div class="introduction" v-html="article.introduction"></div>
+            <h4>内容区</h4>
+            <div class="content" v-html="article.content"></div>
+        </a>
+        <comment-area :commentList="commentList" :commentListPage="commentListPage" @handleAddMessageBoard="handleAddMessageBoard" @handleCurrentChange="handleCurrentChange" :title="'留言'"></comment-area>
         <back-to-top></back-to-top>
-    </main>
+    </section>
 
 </template>
 
@@ -24,6 +21,7 @@ import SidebarLeft from "./sidebar-left";
 import SidebarRight from "./sidebar-right";
 import BackToTop from "@/components/back-to-top";
 import CommentArea from "@/components/comment-area";
+import MyTag from "@/components/my-tag";
 export default {
     data() {
         return {
@@ -57,6 +55,12 @@ export default {
         }
     },
     methods: {
+        // handleClose(item, index) {
+        //     console.log(item, index, 666);
+        // },
+        // handleClick(item, index) {
+        //     console.log(item, index, 777);
+        // },
         //提交
         handleAddMessageBoard(data) {
             postAddComment(this, this.article._id, data, this.page);
@@ -73,7 +77,7 @@ export default {
         //评论数据转换
         translateDataToTree(data) {
             this.commentListPage = data.pageing;
-            if (data.data.length > 0) {
+            if (data.data && data.data.length > 0) {
                 //没有父节点的数据
                 let parents = data.data.filter(
                     value =>
@@ -122,93 +126,38 @@ export default {
         SidebarLeft,
         SidebarRight,
         BackToTop,
-        CommentArea
+        CommentArea,
+        MyTag
     }
 };
 </script>
 
 <style lang="scss">
 @import "../../scss/my-element.scss";
-.artcle-details {
-    max-width: 1170px;
-    display: flex;
-    margin: 20px auto;
-    min-height: 758px;
-    .left {
-        width: 871px;
-        .entry-title {
+.artcle-detail {
+    width: 750px;
+    background-color: #fff;
+    margin-right: 30px;
+    .item-wrap {
+        display: block;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 4px;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        .title {
             font-size: 30px;
             font-weight: 500;
             margin-bottom: 20px;
+        }
+        h4 {
+            text-align: center;
+            margin: 10px 0;
         }
         .introduction {
             img {
                 width: 100%;
                 margin: 10px 0;
             }
-        }
-        .el-card {
-            margin-bottom: 20px;
-            .card-box {
-                .article-ontent {
-                    color: #333;
-                    font-size: 16px;
-                    font-family: Hiragino Sans GB;
-                    text-indent: 2em;
-                    line-height: 28px;
-                }
-                h3 {
-                    text-align: center;
-                    padding: 30px 0;
-                    font-size: 20px;
-                    color: #444;
-                }
-            }
-        }
-        .comment {
-            margin-bottom: 30px;
-            .title {
-                height: 40px;
-                line-height: 40px;
-                padding: 0 10px;
-                background-color: #fafafa;
-                font-size: 16px;
-                @include my-display(space-between);
-            }
-            .content {
-                padding-bottom: 30px;
-                background-color: #fff;
-                .comment-box {
-                    .comment-name {
-                        font-size: 16px;
-                        padding: 10px 0;
-                    }
-                    .comment-content {
-                        font-size: 14px;
-                    }
-                    .lately-children {
-                        margin-left: 20px;
-                        border-bottom: 1px solid #ccc;
-                        padding: 6px 10px;
-                        @include my-display(space-between);
-                    }
-                    .lately-list {
-                        border-bottom: 1px solid #ccc;
-                        @include my-display(space-between);
-                        padding: 16px 10px;
-                    }
-                    .reply {
-                        text-align: center;
-                        height: 43px;
-                        line-height: 43px;
-                        width: 60px;
-                        cursor: pointer;
-                    }
-                }
-            }
-        }
-        .el-textarea__inner {
-            min-height: 100px !important;
         }
     }
 }

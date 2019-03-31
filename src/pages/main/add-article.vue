@@ -21,7 +21,7 @@
             </el-form-item>
         </el-form>
         <div class="funct">
-            <el-button type="success" plain @click="handleClickSave">发布文章</el-button>
+            <el-button type="success" plain @click="handleClickSave">{{routeText}}文章</el-button>
         </div>
     </section>
 </template>
@@ -31,7 +31,8 @@ import {
     postAddArticle,
     getIndexToken,
     postAddLabel,
-    getArtcleDetails
+    getArtcleDetails,
+    putEditArticle
 } from "@/api/main.js";
 import { quillEditor } from "vue-quill-editor";
 import imageUrl from "../../images/1.png";
@@ -108,10 +109,12 @@ export default {
             },
             domain: "http://upload.qiniup.com", //华北地址
             uploadUrl: "http://v.zzp96.cn", //存储对象地址
-            label: ""
+            routeText: "",
+            isclick: true
         };
     },
     created() {
+        this.routeText = this.$route.query.text;
         this.qiniuForm.uploadUrl = this.uploadUrl;
         this.qiniuForm.key =
             new Date().getTime() + "" + Math.floor(Math.random() * 1000);
@@ -122,12 +125,12 @@ export default {
         }
     },
     methods: {
-        handleLabel() {
-            let data = {
-                name: this.label
-            };
-            postAddLabel(this, data);
-        },
+        // handleLabel() {
+        //     let data = {
+        //         name: this.label
+        //     };
+        //     postAddLabel(this, data);
+        // },
         onEditorFocus(text) {
             this.textFocus = text;
         },
@@ -178,7 +181,23 @@ export default {
                 content: this.article.content,
                 introduction: this.article.introduction
             };
-            postAddArticle(this, data);
+            if (this.isclick) {
+                if (this.routeText === "添加") {
+                    postAddArticle(this, data);
+                } else {
+                    putEditArticle(this, this.article._id, data);
+                }
+                this.isclick = false;
+            } else {
+                this.$message({
+                    message: "点击过快稍等片刻，这是一条警告消息",
+                    type: "warning"
+                });
+            }
+            //下面添加需要执行的事件 //定时器
+            setTimeout(() => {
+                this.isclick = true;
+            }, 2000);
         }
     },
     components: {
@@ -191,8 +210,8 @@ export default {
 .add-artcle-details {
     box-sizing: border-box;
     display: flex;
-    height: calc(100vh - 180px);
-    width: 1170px;
+    min-height: calc(100vh - 180px);
+    width: 1040px;
     padding: 20px 0;
     margin: 20px auto;
     background-color: #fff;

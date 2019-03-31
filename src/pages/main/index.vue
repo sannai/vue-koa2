@@ -1,6 +1,6 @@
 <template>
     <main class="main">
-        <sidebar-left :articleList='articleList'></sidebar-left>
+        <router-view></router-view>
         <sidebar-right></sidebar-right>
     </main>
 </template>
@@ -32,8 +32,8 @@ export default {
 <style  lang='scss'>
 .main {
     display: flex;
-    height: calc(100vh - 180px);
-    max-width: 1170px;
-    margin: 20px auto;
+    min-height: calc(100vh - 160px);
+    width: 1040px;
+    margin: 10px auto;
 }
 </style>

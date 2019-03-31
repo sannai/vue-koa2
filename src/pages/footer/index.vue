@@ -25,7 +25,7 @@ export default {
     height: 50px;
     background-color: #24bebe;
     .box-md {
-        width: 1170px;
+        width: 1040px;
         margin: 0 auto;
         display: flex;
         justify-content: space-between;

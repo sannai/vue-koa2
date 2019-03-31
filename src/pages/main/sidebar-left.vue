@@ -1,10 +1,10 @@
 <template>
     <section class="sidebar-left">
         <template v-if="articleList.length > 0">
-            <el-card shadow="always" v-for="item in articleList" :key="item.articleId" @click="handleToArticleDetails(item)">
-                <h3 class="entry-title">{{item.title}}6</h3>
+            <a class="item-wrap" v-for="item in articleList" :key="item.articleId" @click="handleToArticleDetails(item)">
+                <h3 class="title">{{item.title}}</h3>
                 <div class="introduction" v-html="item.introduction"></div>
-                <div class="icon-info">
+                <div class="info-icon">
                     <time class="entry time">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-rili"></use>
@@ -18,21 +18,12 @@
                         </svg>
                         <span>{{item.commentNumber|| '暂无评论'}}</span>
                     </span>
-                    <!-- <span class="dot">|</span>
-                            <span class="entry">
-                            <span>{{item.readNumber}}</span>阅读量
-                        </span> -->
                 </div>
-                <!-- <div class="article-ontent">
-                    <div v-html="item.content"></div>
-                </div> -->
-                <div class="entry-footer">
-                    <div class="tag-label">
-                        <el-tag type="success" v-for="t in item.knowledge" :key="t.id">{{t.name}}</el-tag>
-                    </div>
+                <div class="content-item-actions">
+                    <my-tag v-for="t in item.knowledge" :key="t.id">{{t.name}}</my-tag>
                     <span class="read">阅读全文》</span>
                 </div>
-            </el-card>
+            </a>
         </template>
         <div v-else class="not-data">
             暂无数据
@@ -41,20 +32,29 @@
 </template>
 
 <script>
-import axios from "axios";
+import { getArticleList } from "@/api/main.js";
 import articleImg from "../../images/1.png";
+import MyTag from "@/components/my-tag";
 export default {
-    props: {
-        articleList: Array
+    data() {
+        return {
+            isRouterName: true,
+            articleList: []
+        };
     },
-    created() {},
+    created() {
+        getArticleList(this);
+    },
     methods: {
         handleToArticleDetails(item) {
             this.$router.push({
-                name: "artcle-details",
+                name: "artcle-detail",
                 params: { id: item._id }
             });
         }
+    },
+    components: {
+        MyTag
     }
 };
 </script>
@@ -62,22 +62,22 @@ export default {
 <style  lang='scss'>
 @import "../../scss/my-element.scss";
 .sidebar-left {
-    flex: 1;
+    width: 750px;
     background-color: #fff;
-    .entry-title {
-        font-size: 30px;
-        font-weight: 500;
-        margin-bottom: 20px;
-    }
-    .introduction {
-        img {
-            height: 100%;
-            margin: 10px 0;
+    margin-right: 30px;
+    .item-wrap {
+        display: block;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 4px;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        .title {
+            font-size: 30px;
+            font-weight: 500;
+            margin-bottom: 20px;
         }
-    }
-    .el-card {
-        margin-bottom: 20px;
-        .icon-info {
+        .info-icon {
             display: flex;
             margin: 20px 0;
             @include my-svg(#ccc, 20px, 20px);
@@ -98,27 +98,17 @@ export default {
                 color: #eee;
             }
         }
-        .article-ontent {
-            color: #333;
-            font-size: 16px;
-            line-height: 1.5;
+        .introduction {
+            img {
+                width: 100%;
+                margin: 10px 0;
+            }
         }
-        .entry-footer {
+        .content-item-actions {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            .tag-label {
-                .el-tag {
-                    margin-right: 10px;
-                }
-            }
-            .read {
-                cursor: pointer;
-            }
         }
-    }
-    .el-card:hover {
-        box-shadow: 0 0 10px rgb(172, 145, 145);
     }
     .not-data {
         @include my-display();

@@ -1,8 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Main from '@/pages/main';
+import SidebarLeft from '@/pages/main/sidebar-left';
 import ArtcleDetails from '@/pages/main/artcle-details';
 import AddArticle from '@/pages/main/add-article';
+import Article from '@/pages/main/article';
 import ArticleList from '@/pages/main/article-list';
 import ChatIndex from '@/pages/chatroom';
 import MessageBoard from '@/pages/message-board';
@@ -17,19 +19,26 @@ export default new Router({
             redirect: '/index'
         },
         {
-            path: '/index',
+            path: '',
             name: 'main',
-            component: Main
-        },
-        {
-            path: '/artcle-details/:id',
-            name: 'artcle-details',
-            component: ArtcleDetails
-        },
-        {
-            path: '/add-article',
-            name: 'add-article',
-            component: AddArticle
+            component: Main,
+            children: [
+                {
+                    path: 'index',
+                    name: 'index',
+                    component: SidebarLeft
+                },
+                {
+                    path: 'artcle-detail/:id',
+                    name: 'artcle-detail',
+                    component: ArtcleDetails
+                },
+                {
+                    path: '/message-board',
+                    name: 'message-board',
+                    component: MessageBoard
+                }
+            ]
         },
         {
             path: '/classify',
@@ -37,25 +46,31 @@ export default new Router({
             component: Classify
         },
         {
-            path: '/message-board',
-            name: 'messageBoard',
-            component: MessageBoard
-        },
-        {
-            path: '/article/list',
-            name: 'article-list',
-            component: ArticleList
-        },
-        {
-            path: '/article/edit/:id',
-            name: 'article-edit',
-            component: AddArticle
+            path: '/article',
+            name: 'Article',
+            component: Article,
+            redirect: '/article/list',
+            children: [
+                {
+                    path: 'list',
+                    name: 'article-list',
+                    component: ArticleList
+                },
+                {
+                    path: 'add',
+                    name: 'article-add',
+                    component: AddArticle
+                }, {
+                    path: 'edit/:id',
+                    name: 'article-edit',
+                    component: AddArticle
+                }
+            ]
         },
         {
             path: '/chat',
             name: 'chat',
             component: ChatIndex
         }
-        
     ]
 });
