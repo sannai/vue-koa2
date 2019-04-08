@@ -13,7 +13,7 @@ const getSeeMessageBoard = (that, data) => {
 };
 
 //留言-添加
-const postAddMessageBoard = (that, data, text, page) => {
+const postAddMessageBoard = (that, data, text) => {
     Http({
         method: 'post',
         url: `/message-board/index`,
@@ -21,7 +21,7 @@ const postAddMessageBoard = (that, data, text, page) => {
     }, (response) => {
         that.$message.success(`${text}成功`);
         let datas = {
-            page: page,
+            page: 1,
             limit: 10
         };
         getSeeMessageBoard(that, datas);

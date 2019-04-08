@@ -23,15 +23,16 @@ export default {
 <style  lang='scss'>
 .footers {
     height: 50px;
+    position: relative;
     background-color: #24bebe;
     .box-md {
         width: 1040px;
+        height: 100%;
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         p {
-            margin-top: 10px;
-
             a {
                 color: #fff;
                 font-size: 14px;

@@ -1,6 +1,6 @@
 <template>
     <!-- 富文本上传 -->
-    <section class="add-artcle-details">
+    <main class="artcle-details">
         <!-- <el-input placeholder="标题" v-model="label"></el-input>
                 <el-button size="mini" @click="handleLabel">新增标签</el-button> -->
         <el-form label-width="80px">
@@ -14,16 +14,16 @@
                 </quill-editor>
             </el-form-item>
             <el-form-item label="内容">
-                <el-upload class="avatar-uploader" ref="content" :action="domain" :data="qiniuForm" :show-file-list="false" :on-success="uploadEditorSuccess" :on-error="uploadEditorError" :before-upload="beforeEditorUpload">
+                <el-upload class="avatar-uploader" :action="domain" :data="qiniuForm" :show-file-list="false" :on-success="uploadEditorSuccess" :on-error="uploadEditorError" :before-upload="beforeEditorUpload">
                 </el-upload>
-                <quill-editor class="editor" @focus="onEditorFocus('content')" v-model="article.content" ref="content" :options="editorOption2">
+                <quill-editor class="editor" :class="{'ceiling': isCeiling}" v-model="article.content" @focus="onEditorFocus('content')" @blur="handleBlur" ref="content" :options="editorOption2">
                 </quill-editor>
             </el-form-item>
         </el-form>
         <div class="funct">
             <el-button type="success" plain @click="handleClickSave">{{routeText}}文章</el-button>
         </div>
-    </section>
+    </main>
 </template>
 
 <script>
@@ -34,7 +34,12 @@ import {
     getArtcleDetails,
     putEditArticle
 } from "@/api/main.js";
-import { quillEditor } from "vue-quill-editor";
+// import { quillEditor } from "vue-quill-editor";
+import { Quill } from "vue-quill-editor";
+// import { ImageDrop } from "quill-image-drop-module";
+// import { ImageResize } from "quill-image-resize-module";
+// Quill.register("modules/imageResize", ImageResize);
+// Quill.register("modules/imageDrop", ImageDrop);
 import imageUrl from "../../images/1.png";
 //自定义编辑器的工作条
 const toolbarOptions = [["image"]];
@@ -42,16 +47,14 @@ const toolbarOptions = [["image"]];
 const toolbarOptions2 = [
     ["bold", "italic", "underline", "strike"], // toggled buttons
     ["blockquote", "code-block"],
-
     [{ header: 1 }, { header: 2 }], // custom button values
     [{ list: "ordered" }, { list: "bullet" }],
     [{ script: "sub" }, { script: "super" }], // superscript/subscript
     [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
     [{ direction: "rtl" }], // text direction
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
     [{ color: [] }, { background: [] }], // dropdown with defaults from theme
     [{ align: [] }],
-    ["link", "image", "video"],
+    ["image"],
     ["clean"] // remove formatting button
 ];
 export default {
@@ -69,7 +72,8 @@ export default {
                     toolbar: {
                         container: toolbarOptions, // 工具栏
                         handlers: {
-                            image: function(value) {
+                            image: value => {
+                                getIndexToken(this);
                                 if (value) {
                                     document
                                         .querySelector(".avatar-uploader input")
@@ -88,7 +92,8 @@ export default {
                     toolbar: {
                         container: toolbarOptions2, // 工具栏
                         handlers: {
-                            image: function(value) {
+                            image: value => {
+                                getIndexToken(this);
                                 if (value) {
                                     document
                                         .querySelector(".avatar-uploader input")
@@ -110,28 +115,37 @@ export default {
             domain: "http://upload.qiniup.com", //华北地址
             uploadUrl: "http://v.zzp96.cn", //存储对象地址
             routeText: "",
-            isclick: true
+            isclick: true,
+            isCeiling: false //吸顶
         };
     },
     created() {
         this.routeText = this.$route.query.text;
+        console.log(this.$route.params);
+        if (this.$route.query.text === "添加") {
+            this.article = {
+                content: "",
+                title: "",
+                introduction: ""
+            };
+        }
         this.qiniuForm.uploadUrl = this.uploadUrl;
         this.qiniuForm.key =
             new Date().getTime() + "" + Math.floor(Math.random() * 1000);
-        if (this.$route.params.id) {
+        if (this.$route.query.text === "编辑") {
             getArtcleDetails(this, this.$route.params.id);
-        } else {
-            getIndexToken(this);
         }
     },
     methods: {
-        // handleLabel() {
-        //     let data = {
-        //         name: this.label
-        //     };
-        //     postAddLabel(this, data);
-        // },
+        handleBlur() {
+            this.isCeiling = false;
+        },
         onEditorFocus(text) {
+            if (text === "content") {
+                this.isCeiling = true;
+            } else {
+                this.isCeiling = false;
+            }
             this.textFocus = text;
         },
         //上传图片之前
@@ -150,9 +164,10 @@ export default {
             this.qiniuForm.key =
                 new Date().getTime() + "" + Math.floor(Math.random() * 1000);
             // 获取富文本组件实例
+            console.log(this.$refs.content.quill);
             if (textFocus === "introduction") {
                 quill = this.$refs.introduction.quill;
-            } else {
+            } else if (textFocus === "content") {
                 quill = this.$refs.content.quill;
             }
             // 获取光标所在位置
@@ -175,6 +190,7 @@ export default {
             //取消上传动画
             this.quillUpdateImg = false;
         },
+        //添加/编辑
         handleClickSave() {
             let data = {
                 title: this.article.title,
@@ -199,15 +215,15 @@ export default {
                 this.isclick = true;
             }, 2000);
         }
-    },
-    components: {
-        quillEditor
     }
+    // components: {
+    //     quillEditor
+    // }
 };
 </script>
 
 <style lang="scss">
-.add-artcle-details {
+.artcle-details {
     box-sizing: border-box;
     display: flex;
     min-height: calc(100vh - 180px);
@@ -219,12 +235,23 @@ export default {
         flex: 1;
         margin-right: 20px;
     }
+    .editor {
+        .ql-toolbar {
+            background-color: #f6f6f6;
+        }
+    }
+    .ceiling {
+        .ql-toolbar {
+            position: sticky;
+            z-index: 1;
+            top: 76px;
+        }
+    }
     .funct {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        height: calc(100vh - 180px);
-        margin-top: -50px;
+        position: sticky;
+        top: 50%;
+        z-index: 2;
+        height: 100px;
     }
 }
 </style>

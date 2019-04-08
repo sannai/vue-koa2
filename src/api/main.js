@@ -3,12 +3,13 @@
 import Http from '@/utils/http';
 
 //文章-列表
-const getArticleList = (that) => {
+const getArticleList = (that, data) => {
     Http({
         method: 'get',
-        url: '/index'
+        url: '/index',
+        params: data
     }, (response) => {
-        that.articleList = response.data.message;
+        that.$store.commit('handleArticleList', response.data.message);
     }, (error) => {
     });
 };
@@ -56,7 +57,12 @@ const deleteDeletArticle = (that, id) => {
         url: `/index/delete-article/${id}`
     }, (response) => {
         that.$message.success('删除成功');
-        getArticleList(that);
+        let data = {
+            keyWord: this.keyWord,
+            page: 1,
+            limit: 10
+        };
+        getArticleList(that, data);
     }, (error) => {
     });
 };
@@ -75,7 +81,7 @@ const getComment = (that, id, data) => {
 };
 
 //评论-添加
-const postAddComment = (that, id, data, page) => {
+const postAddComment = (that, id, data) => {
     Http({
         method: 'post',
         url: `/index/add-comment/${id}`,
@@ -83,7 +89,7 @@ const postAddComment = (that, id, data, page) => {
     }, (response) => {
         that.$message.success('评论成功');
         let datas = {
-            page,
+            page: 1,
             limit: 10
         };
         getComment(that, id, datas);

@@ -1,9 +1,11 @@
 <template>
-    <section>
+    <div id="app">
         <Header></Header>
-        <router-view />
+        <keep-alive>
+            <router-view></router-view>
+        </keep-alive>
         <Footer></Footer>
-    </section>
+    </div>
 </template>
 
 <script>

@@ -23,7 +23,7 @@ const articleListSchema = new Schema({
             }
         ]
     },
-    createDate: { type: Date, default: Date.now() } //创建时间
+    createDate: { type: Date, default: Date.now } //创建时间
 });
 
 //文章-评论
@@ -53,7 +53,7 @@ const commentSchema = new Schema({
             }
         }
     ],
-    createDate: { type: Date, default: Date.now() }
+    createDate: { type: Date, default: Date.now }
 });
 
 //标签

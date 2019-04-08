@@ -1,7 +1,7 @@
 <template>
     <!-- 留言板 -->
-    <section class="message-board">
-        <h2 class="title">留言板</h2>
+    <main class="message-board">
+        <h3 class="leave-message">留言板</h3>
         <div class="content">
             <p>
                 <img src="../../images/With-love-for-life.jpg" alt="" width="100%">
@@ -13,8 +13,8 @@
                 请与我联系！
             </p>
         </div>
-        <comment-area :commentList="commentList" :commentListPage="commentListPage" @handleAddMessageBoard="handleAddMessageBoard" @handleCurrentChange="handleCurrentChange" :title="'留言'"></comment-area>
-    </section>
+        <comment-area :commentList="commentList" :commentListPage="commentListPage" @handleAddMessageBoard="handleAddMessageBoard" @handleCurrentChange="handleCurrentChange" @handleScroll="handleScroll" :title="'留言'"></comment-area>
+    </main>
 </template>
 
 <script>
@@ -43,18 +43,29 @@ export default {
         getSeeMessageBoard(this, data);
     },
     methods: {
+        handleScroll(val) {
+            if (
+                Math.round(val.scrollTop) + val.clientHeight ===
+                val.scrollHeight
+            ) {
+                if (
+                    Math.ceil(
+                        this.commentListPage.total / this.commentListPage.limit
+                    ) > this.page
+                ) {
+                    this.page++;
+
+                    let data = {
+                        page: this.page,
+                        limit: 10
+                    };
+                    getSeeMessageBoard(this, data);
+                }
+            }
+        },
         //提交
         handleAddMessageBoard(data) {
-            postAddMessageBoard(this, data, "留言", this.page);
-        },
-        //分页
-        handleCurrentChange(val) {
-            this.page = val;
-            let data = {
-                page: val,
-                limit: 10
-            };
-            getSeeMessageBoard(this, data);
+            postAddMessageBoard(this, data, "留言");
         },
         //评论数据转换
         translateDataToTree(data) {
@@ -101,7 +112,15 @@ export default {
 
                 //调用转换方法
                 translator(parents, children);
-                this.commentList = parents;
+                this.commentList = this.commentList.concat(parents);
+                let hash = [];
+                this.commentList = this.commentList.reduce((item, next) => {
+                    // eslint-disable-next-line no-unused-expressions
+                    hash[next._id]
+                        ? ""
+                        : (hash[next._id] = true && item.push(next));
+                    return item;
+                }, []);
             }
         }
     },
@@ -115,13 +134,16 @@ export default {
 <style lang="scss">
 @import "../../scss/my-element.scss";
 .message-board {
-    margin-right: 30px;
+    width: 1040px;
+    margin: 20px auto;
     background-color: #fff;
-    .title {
-        color: #333;
-        font-size: 20px;
+    .leave-message {
         text-align: center;
-        margin: 20px 0;
+        font-size: 18px;
+        padding: 20px 0;
+    }
+    .title {
+        text-align: center;
     }
     .content {
         padding: 0 20px;

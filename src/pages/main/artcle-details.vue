@@ -3,13 +3,13 @@
         <a class="item-wrap">
             <h3 class="title">{{article.title}}</h3>
             <template v-for="item in article.knowledge">
-                <my-tag type="danger" :key="item.id">{{item.name}}</my-tag>
+                <my-tag :key="item.id">{{item.name}}</my-tag>
             </template>
             <div class="introduction" v-html="article.introduction"></div>
             <h4>内容区</h4>
             <div class="content" v-html="article.content"></div>
         </a>
-        <comment-area :commentList="commentList" :commentListPage="commentListPage" @handleAddMessageBoard="handleAddMessageBoard" @handleCurrentChange="handleCurrentChange" :title="'留言'"></comment-area>
+        <comment-area :commentList="commentList" :commentListPage="commentListPage" @handleAddMessageBoard="handleAddMessageBoard" @handleScroll="handleScroll" :title="'留言'"></comment-area>
         <back-to-top></back-to-top>
     </section>
 
@@ -61,18 +61,29 @@ export default {
         // handleClick(item, index) {
         //     console.log(item, index, 777);
         // },
+        handleScroll(val) {
+            if (
+                Math.round(val.scrollTop) + val.clientHeight ===
+                val.scrollHeight
+            ) {
+                if (
+                    Math.ceil(
+                        this.commentListPage.total / this.commentListPage.limit
+                    ) > this.page
+                ) {
+                    this.page++;
+
+                    let data = {
+                        page: this.page,
+                        limit: 10
+                    };
+                    getComment(this, this.$route.params.id, data);
+                }
+            }
+        },
         //提交
         handleAddMessageBoard(data) {
             postAddComment(this, this.article._id, data, this.page);
-        },
-        //分页
-        handleCurrentChange(val) {
-            this.page = val;
-            let data = {
-                page: val,
-                limit: 10
-            };
-            getComment(this, this.$route.params.id, data);
         },
         //评论数据转换
         translateDataToTree(data) {
@@ -118,7 +129,15 @@ export default {
                 };
                 //调用转换方法
                 translator(parents, children);
-                this.commentList = parents;
+                this.commentList = this.commentList.concat(parents);
+                let hash = [];
+                this.commentList = this.commentList.reduce((item, next) => {
+                    // eslint-disable-next-line no-unused-expressions
+                    hash[next._id]
+                        ? ""
+                        : (hash[next._id] = true && item.push(next));
+                    return item;
+                }, []);
             }
         }
     },
@@ -150,13 +169,25 @@ export default {
             margin-bottom: 20px;
         }
         h4 {
+            font-size: 16px;
             text-align: center;
-            margin: 10px 0;
+            margin: 16px 0;
         }
         .introduction {
+            margin: 10px 0;
+            p {
+                height: 250px;
+            }
             img {
                 width: 100%;
-                margin: 10px 0;
+                height: 100%;
+            }
+        }
+        .content {
+            text-indent: 24px;
+            font-size: 14px;
+            img {
+                width: 100%;
             }
         }
     }

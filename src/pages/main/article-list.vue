@@ -4,9 +4,9 @@
             <!-- <router-link to="/add-article"> -->
             <el-button type="primary" icon="el-icon-plus" @click="handleFunct('添加')">新增文章</el-button>&emsp;
             <!-- </router-link>&emsp; -->
-            <el-input placeholder="请输入内容" v-model="input5" class="input-select">
-                <el-button slot="append" icon="el-icon-search"></el-button>
-            </el-input>
+            <!-- <el-input placeholder="请输入内容" v-model="keyWord" class="input-select">
+                <el-button slot="append" icon="el-icon-search" @click="handleSelect"></el-button>
+            </el-input> -->
         </header>
         <section class="section">
             <el-table :data="articleList" border>
@@ -39,18 +39,20 @@
                 </el-table-column>
             </el-table>
         </section>
+        <footer class="footer">
+            <el-pagination @current-change="handleCurrentChange" :current-page="articleListPage.page" :page-sizes="[10, 20]" :page-size="10" background layout="total,  prev, pager, next, jumper" :total="articleListPage.total"></el-pagination>
+        </footer>
     </main>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { getArticleList, deleteDeletArticle } from "@/api/main";
 import MyTag from "@/components/my-tag";
 export default {
     data() {
         return {
-            articleList: [],
-            article: {},
-            input5: ""
+            article: {}
         };
     },
     created() {
@@ -60,7 +62,20 @@ export default {
         };
         getArticleList(this, data);
     },
+    computed: {
+        ...mapState({
+            articleList: state => state.main.articleList,
+            articleListPage: state => state.main.articleListPage
+        })
+    },
     methods: {
+        handleCurrentChange(val) {
+            let data = {
+                page: val,
+                limit: 10
+            };
+            getArticleList(this, data);
+        },
         handleFunct(text, row) {
             if (text === "删除") {
                 this.$confirm("此操作将删除该文章, 是否继续?", "提示", {
@@ -121,6 +136,12 @@ export default {
         .input-select {
             width: 250px;
         }
+    }
+    .section {
+        min-height: calc(100vh - 320px);
+    }
+    .footer {
+        text-align: center;
     }
 }
 </style>

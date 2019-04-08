@@ -6,8 +6,18 @@ const qiniu = require('qiniu');
 let router = new Router();
 //列表
 router.get("/", async ctx => {
+    let page = Number(ctx.query.page);
+    let limit = Number(ctx.query.limit);
+    let keyWord = ctx.query.keyWord ? ctx.query.keyWord : '';
     let articleList = mongoose.model("articleList");
     await articleList.aggregate([
+        {
+            $match: {
+                title: {
+                    $regex: keyWord
+                }
+            }
+        },
         {
             $lookup: {
                 from: "comment",
@@ -26,6 +36,12 @@ router.get("/", async ctx => {
             $sort: {
                 createDate: -1
             }
+        },
+        {
+            $skip: (page - 1) * limit
+        },
+        {
+            $limit: limit
         }
     ]).exec().then((val) => {
         val.forEach((item, index) => {
@@ -34,7 +50,16 @@ router.get("/", async ctx => {
             });
             delete item.commentList;
         });
-        ctx.body = { success: 200, message: val };
+        ctx.body = {
+            success: 200, message: {
+                data: val,
+                page: {
+                    total: val.length,
+                    page,
+                    limit
+                }
+            }
+        };
     });
 });
 
@@ -137,12 +162,11 @@ router.get("/article-details/comment/:id", async ctx => {
     let article = mongoose.model("comment");
     let page = Number(ctx.query.page);
     let limit = Number(ctx.query.limit);
-    let data = [];
     let totalData = await article.find({ aticleId: ctx.params.id }).populate({
         path: 'content', //对应auditOpinion表 设置字段
         populate: { path: 'content' }
     });
-    let total = totalData[0].content.length;
+    
     await article.aggregate([
         {
             $match: { aticleId: mongoose.Types.ObjectId(ctx.params.id) }
@@ -162,6 +186,7 @@ router.get("/article-details/comment/:id", async ctx => {
             $limit: limit
         }
     ]).then(res => {
+        let total = totalData[0].content.length;
         ctx.body = {
             code: 200,
             message: {

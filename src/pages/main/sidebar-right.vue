@@ -1,6 +1,8 @@
 <template>
     <article class="sidebar-right">
-        <header class="title">
+        <p class="information">个人信息</p>
+        <img src="../../images/wx.png" alt="我的微信" />
+        <!-- <header class="title">
             <h3>最新评论</h3>
             <p>更多留言</p>
         </header>
@@ -9,7 +11,7 @@
                 <p class="name">{{item.name}}</p>
                 <p class="content">{{item.content}}</p>
             </li>
-        </ul>
+        </ul> -->
     </article>
 </template>
 
@@ -53,31 +55,41 @@ export default {
 <style  lang='scss'>
 .sidebar-right {
     width: 260px;
-    .title {
+    .information {
+        // margin-bottom: 20px;
+        box-sizing: border-box;
         padding: 10px;
+        font-size: 16px;
         background-color: #fafafa;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
     }
-    ul {
-        background-color: #fff;
-        .lately-comment-list {
-            border-bottom: 1px solid #ccc;
-            padding: 6px 10px;
-            .name {
-                color: #333;
-                font-size: 14px;
-            }
-            .content {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                font-size: 12px;
-                height: 24px;
-                line-height: 24px;
-            }
-        }
+    img {
+        width: 100%;
     }
+    // .title {
+    //     padding: 10px;
+    //     background-color: #fafafa;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: space-between;
+    // }
+    // ul {
+    //     background-color: #fff;
+    //     .lately-comment-list {
+    //         border-bottom: 1px solid #ccc;
+    //         padding: 6px 10px;
+    //         .name {
+    //             color: #333;
+    //             font-size: 14px;
+    //         }
+    //         .content {
+    //             overflow: hidden;
+    //             text-overflow: ellipsis;
+    //             white-space: nowrap;
+    //             font-size: 12px;
+    //             height: 24px;
+    //             line-height: 24px;
+    //         }
+    //     }
+    // }
 }
 </style>

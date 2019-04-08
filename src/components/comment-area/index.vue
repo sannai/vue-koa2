@@ -4,7 +4,7 @@
             <h3>{{title}}</h3>
             <p>共{{commentListPage.total}}条</p>
         </header>
-        <section class="content">
+        <section class="content" ref="content" @scroll="handleScrollLoad">
             <ul class="comment-box" v-if="commentList.length > 0">
                 <li v-for="item in commentList" :key="item.id">
                     <div class="lately-list">
@@ -33,12 +33,9 @@
                 </li>
             </ul>
             <p v-else class="not-data">
-                暂无数据
+                暂无评论
             </p>
         </section>
-        <footer class="pagination">
-            <el-pagination @current-change="handleCurrentChange" :current-page="commentListPage.page" :page-sizes="[10, 20]" :page-size="10" background layout="total,  prev, pager, next, jumper" :total="commentListPage.total"></el-pagination>
-        </footer>
         <el-form label-width="60px">
             <el-form-item label="名字" :error="isCommentValue.commentName">
                 <el-input type="text" ref="input" v-model="commentValue.commentName" placeholder="昵称" size="mini"></el-input>
@@ -87,6 +84,9 @@ export default {
         };
     },
     methods: {
+        handleScrollLoad() {
+            this.$emit("handleScroll", this.$refs.content);
+        },
         //验证
         checkForm() {
             let isOk = true;
@@ -163,6 +163,23 @@ export default {
 
 <style lang="scss">
 @import "../../scss/my-element.scss";
+.content::-webkit-scrollbar {
+    /*滚动条整体样式*/
+    width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+}
+.content::-webkit-scrollbar-thumb {
+    /*滚动条里面小方块*/
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px rgba(144, 147, 153, 0.3);
+    background-color: #ccc;
+}
+.content::-webkit-scrollbar-track {
+    /*滚动条里面轨道*/
+    box-shadow: inset 0 0 5px rgba(144, 147, 153, 0.3);
+    border-radius: 10px;
+    background-color: #ededed;
+}
 .comment-area {
     padding: 20px;
     .title {
@@ -170,12 +187,15 @@ export default {
         line-height: 40px;
         padding: 0 10px;
         background-color: #fafafa;
-        font-size: 16px;
+        font-size: 14px;
         @include my-display(space-between);
     }
     .content {
-        padding-bottom: 30px;
+        max-height: 400px;
+        overflow: auto;
+        margin-bottom: 30px;
         background-color: #fff;
+        border: 1px solid #f5f5f5;
         .comment-box {
             .name {
                 font-size: 16px;

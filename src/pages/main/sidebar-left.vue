@@ -3,24 +3,24 @@
         <template v-if="articleList.length > 0">
             <a class="item-wrap" v-for="item in articleList" :key="item.articleId" @click="handleToArticleDetails(item)">
                 <h3 class="title">{{item.title}}</h3>
+                <my-tag v-for="t in item.knowledge" :key="t.id">{{t.name}}</my-tag>
                 <div class="introduction" v-html="item.introduction"></div>
                 <div class="info-icon">
-                    <time class="entry time">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-rili"></use>
-                        </svg>
-                        <span>{{item.createDate}}</span>
-                    </time>
-                    <span class="dot">|</span>
-                    <span class="entry">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-liuyan"></use>
-                        </svg>
-                        <span>{{item.commentNumber|| '暂无评论'}}</span>
-                    </span>
-                </div>
-                <div class="content-item-actions">
-                    <my-tag v-for="t in item.knowledge" :key="t.id">{{t.name}}</my-tag>
+                    <div>
+                        <time class="entry time" title="创建时间">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-rili"></use>
+                            </svg>
+                            <span>{{item.createDate.slice(0,10)}}</span>
+                        </time>
+                        <span class="dot">|</span>
+                        <span class="entry" title="留言数量">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-liuyan"></use>
+                            </svg>
+                            <span>{{item.commentNumber|| '暂无评论'}}</span>
+                        </span>
+                    </div>
                     <span class="read">阅读全文》</span>
                 </div>
             </a>
@@ -32,18 +32,23 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { getArticleList } from "@/api/main.js";
 import articleImg from "../../images/1.png";
 import MyTag from "@/components/my-tag";
 export default {
-    data() {
-        return {
-            isRouterName: true,
-            articleList: []
-        };
-    },
     created() {
-        getArticleList(this);
+        let data = {
+            page: 1,
+            limit: 10
+        };
+        getArticleList(this, data);
+    },
+    computed: {
+        ...mapState({
+            articleList: state => state.main.articleList,
+            articleListPage: state => state.main.articleListPage
+        })
     },
     methods: {
         handleToArticleDetails(item) {
@@ -70,7 +75,7 @@ export default {
         margin: 20px;
         padding: 20px;
         border-radius: 4px;
-        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        border: 1px solid #f7f7f7;
         cursor: pointer;
         .title {
             font-size: 30px;
@@ -78,18 +83,24 @@ export default {
             margin-bottom: 20px;
         }
         .info-icon {
-            display: flex;
+            @include my-display(space-between);
             margin: 20px 0;
             @include my-svg(#ccc, 20px, 20px);
+            div {
+                @include my-display();
+            }
             svg {
                 margin-right: 5px;
             }
-
             .entry {
                 height: 20px;
                 display: flex;
                 align-items: center;
                 color: #aaa;
+                span {
+                    height: 100%;
+                    line-height: 24px;
+                }
             }
             .dot {
                 height: 20px;
@@ -99,9 +110,14 @@ export default {
             }
         }
         .introduction {
+            margin: 10px 0;
+
+            p {
+                height: 250px;
+            }
             img {
                 width: 100%;
-                margin: 10px 0;
+                height: 100%;
             }
         }
         .content-item-actions {
@@ -109,6 +125,9 @@ export default {
             align-items: center;
             justify-content: space-between;
         }
+    }
+    .item-wrap:hover {
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     }
     .not-data {
         @include my-display();

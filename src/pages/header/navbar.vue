@@ -32,30 +32,40 @@
             </el-menu-item>
             <el-menu-item index="5" class="navbar-list" @click="handleClickToRoute('/article/list')">
                 <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-liuyan"></use>
+                    <use xlink:href="#icon-liebiao2"></use>
                 </svg>
                 <span class="text">文章列表</span>
             </el-menu-item>
         </el-menu>
         <div style="display: flex">
-            <el-input placeholder="请输入内容" v-model="search" class="input-with-select">
-                <el-button slot="append" icon="el-icon-search"></el-button>
+            <el-input placeholder=" 请输入内容" v-model="keyWord" class="input-with-select">
+                <el-button slot="append" icon="el-icon-search" @click="handleSelect"></el-button>
             </el-input>
         </div>
     </nav>
 </template>
 
 <script>
+import { getArticleList } from "@/api/main";
 export default {
     data() {
         return {
-            search: "",
-            activeIndex: "1"
+            activeIndex: "1",
+            keyWord: ""
         };
     },
     methods: {
+        //路由跳转
         handleClickToRoute(route) {
             this.$router.push(route);
+        },
+        handleSelect() {
+            let data = {
+                keyWord: this.keyWord,
+                page: 1,
+                limit: 10
+            };
+            getArticleList(this, data);
         }
     }
 };
@@ -64,7 +74,7 @@ export default {
 <style  lang='scss'>
 @import "../../scss/my-element.scss";
 .menu {
-    flex: 1;
+    width: 888px;
     @include my-display(space-between);
     .el-menu.el-menu--horizontal {
         border: none;
