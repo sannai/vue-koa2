@@ -1,5 +1,5 @@
 # vue-koa2
-预览地址http://www.zzp96.cn/#/index
+预览地址http://www.zzp96.cn
 
 使用Vue+node+Koa2+MongoDB+Mongoose+WebPack
 
