@@ -56,16 +56,7 @@ const commentSchema = new Schema({
     createDate: { type: Date, default: Date.now }
 });
 
-//标签
-const labelSchema = new Schema({
-    tag: [{
-        name: String
-    }]
-});
-
-
 //发布模型
 mongoose.model('articleList', articleListSchema, 'articleList');
 mongoose.model('comment', commentSchema, 'comment');
-mongoose.model('label', labelSchema, 'label');
 

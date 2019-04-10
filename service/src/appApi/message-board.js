@@ -2,7 +2,7 @@ const Router = require("koa-router");
 const mongoose = require("mongoose");
 let router = new Router();
 
-router.get("/index", async (ctx) => {
+router.get("/list", async (ctx) => {
     let messageBoard = mongoose.model("messageBoard");
     let page = Number(ctx.query.page);
     let limit = Number(ctx.query.limit);
@@ -35,7 +35,7 @@ router.get("/index", async (ctx) => {
 });
 
 //留言-新增
-router.post("/index", async (ctx) => {
+router.post("/add", async (ctx) => {
     let messageBoard = mongoose.model("messageBoard");
     const newMessageBoard = new messageBoard(ctx.request.body);
     await newMessageBoard.save().then(async () => {

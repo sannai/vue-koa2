@@ -4,7 +4,7 @@ import Http from '@/utils/http';
 const getSeeMessageBoard = (that, data) => {
     Http({
         method: 'get',
-        url: `/message-board/index`,
+        url: `/message-board/list`,
         params: data
     }, (response) => {
         that.translateDataToTree(response.data.message);
@@ -16,7 +16,7 @@ const getSeeMessageBoard = (that, data) => {
 const postAddMessageBoard = (that, data, text) => {
     Http({
         method: 'post',
-        url: `/message-board/index`,
+        url: `/message-board/add`,
         params: data
     }, (response) => {
         that.$message.success(`${text}成功`);

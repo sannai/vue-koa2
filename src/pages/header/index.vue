@@ -9,10 +9,16 @@
 
 <script>
 import Navbar from "./navbar";
+import { getKnowledgePoint } from "@/api/knowledge-point";
 
 export default {
     data() {
-        return {};
+        return {
+            knowledgePointList: []
+        };
+    },
+    created() {
+        getKnowledgePoint(this);
     },
     components: {
         Navbar

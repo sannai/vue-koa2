@@ -3,14 +3,14 @@ const app = new Koa();
 const Router = require('koa-router');
 const path = require('path');
 const hostname = '0.0.0.0';
-// const server = require('http').createServer(app.callback());
-// const io = require('socket.io')(server);
-const statics = require('koa-static');
-const bodyParser = require('koa-bodyparser');
-const cors = require('koa2-cors');
+const statics = require('koa-static'); //静态文件
+const bodyParser = require('koa-bodyparser'); //获取数据
+const cors = require('koa2-cors'); //跨域
+const cpmpress = require('koa-compress'); //开启gzip
 const staticPath = './static';
 const { connect, initSchemas } = require('./src/database/init');
-// const { chat } = require('./src/appApi/chat');
+const options = { threshold: 2048 };
+app.use(cpmpress(options));
 app.use(bodyParser());
 app.use(cors());
 app.use(statics(
@@ -19,15 +19,12 @@ app.use(statics(
 let router = new Router();
 let index = require('./src/appApi/main.js');
 let messageBoard = require('./src/appApi/message-board.js');
-// let goods = require('./appApi/goods.js');
+let knowledgePoint = require('./src/appApi/knowledge-point.js');
 router.use('/index', index.routes());
 router.use('/message-board', messageBoard.routes());
-// router.use('/goods', goods.routes());
+router.use('/knowledge-point', knowledgePoint.routes());
 app.use(router.routes());
 app.use(router.allowedMethods());
-
-//在线聊天
-// chat(io);
 
 ;//立即执行数据库链接
 (async () => {

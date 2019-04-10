@@ -6,7 +6,7 @@ import Http from '@/utils/http';
 const getArticleList = (that, data) => {
     Http({
         method: 'get',
-        url: '/index',
+        url: '/index/list',
         params: data
     }, (response) => {
         that.$store.commit('handleArticleList', response.data.message);
@@ -30,7 +30,7 @@ const postAddArticle = (that, data) => {
 const getArtcleDetails = (that, id) => {
     Http({
         method: 'get',
-        url: `/index/article-details/${id}`
+        url: `/index/article-detail/${id}`
     }, (response) => {
         that.article = response.data.message[0];
     }, (error) => {
@@ -71,7 +71,7 @@ const deleteDeletArticle = (that, id) => {
 const getComment = (that, id, data) => {
     Http({
         method: 'get',
-        url: `/index/article-details/comment/${id}`,
+        url: `/index/comment/${id}`,
         params: data
     }, (response) => {
         that.translateDataToTree(response.data.message);
@@ -97,17 +97,6 @@ const postAddComment = (that, id, data) => {
     });
 };
 
-//标签-添加
-const postAddLabel = (that, data) => {
-    Http({
-        method: 'post',
-        url: `/index/add-label`,
-        params: data
-    }, (response) => {
-    }, (error) => {
-    });
-};
-
 //七牛云
 const getIndexToken = (that) => {
     Http({
@@ -127,6 +116,5 @@ export {
     putEditArticle,
     deleteDeletArticle,
     postAddComment,
-    postAddLabel,
     getIndexToken
 };
