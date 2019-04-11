@@ -53,7 +53,7 @@ export default {
     methods: {
         handleToArticleDetails(item) {
             this.$router.push({
-                name: "artcle-detail",
+                name: "ArtcleDetail",
                 params: { id: item._id }
             });
         }

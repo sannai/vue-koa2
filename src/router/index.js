@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Main from '@/pages/main';
 import SidebarLeft from '@/pages/main/sidebar-left';
-import ArtcleDetails from '@/pages/main/artcle-details';
+import ArtcleDetail from '@/pages/main/artcle-detail';
 import AddArticle from '@/pages/main/add-article';
 import Article from '@/pages/main/article';
 import ArticleList from '@/pages/main/article-list';
@@ -17,7 +17,6 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'main',
             component: Main,
             children: [
                 {
@@ -27,38 +26,32 @@ export default new Router({
                 },
                 {
                     path: 'article/:id',
-                    name: 'artcle-detail',
-                    component: ArtcleDetails
+                    name: 'ArtcleDetail',
+                    component: ArtcleDetail
                 }
             ]
         },
-        // {
-        //     path: '/classify',
-        //     name: 'classify',
-        //     component: Classify
-        // },
         {
             path: '/message-board',
-            name: 'message-board',
+            name: 'MessageBoard',
             component: MessageBoard
         },
         {
             path: '/article',
-            name: 'Article',
             component: Article,
             children: [
                 {
                     path: '',
-                    name: 'article-list',
+                    name: 'ArticleList',
                     component: ArticleList
                 },
                 {
                     path: 'add',
-                    name: 'article-add',
+                    name: 'ArticleAdd',
                     component: AddArticle
                 }, {
                     path: 'edit/:id',
-                    name: 'article-edit',
+                    name: 'ArticleEdit',
                     component: AddArticle
                 }
             ]

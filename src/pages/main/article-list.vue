@@ -98,14 +98,14 @@ export default {
                     });
             } else if (text === "添加") {
                 this.$router.push({
-                    name: "article-add",
+                    name: "ArticleAdd",
                     query: {
                         text: "添加"
                     }
                 });
             } else if (text === "编辑") {
                 this.$router.push({
-                    name: "article-edit",
+                    name: "ArticleEdit",
                     params: {
                         id: row._id
                     },

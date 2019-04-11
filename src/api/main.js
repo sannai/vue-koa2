@@ -6,7 +6,7 @@ import Http from '@/utils/http';
 const getArticleList = (that, data) => {
     Http({
         method: 'get',
-        url: '/index/list',
+        url: '/main/list',
         params: data
     }, (response) => {
         that.$store.commit('handleArticleList', response.data.message);
@@ -18,7 +18,7 @@ const getArticleList = (that, data) => {
 const postAddArticle = (that, data) => {
     Http({
         method: 'post',
-        url: `/index/add-article`,
+        url: `/main/add-article`,
         params: data
     }, (response) => {
         that.$message.success('添加成功');
@@ -30,7 +30,7 @@ const postAddArticle = (that, data) => {
 const getArtcleDetails = (that, id) => {
     Http({
         method: 'get',
-        url: `/index/article-detail/${id}`
+        url: `/main/article-detail/${id}`
     }, (response) => {
         that.article = response.data.message[0];
     }, (error) => {
@@ -41,7 +41,7 @@ const getArtcleDetails = (that, id) => {
 const putEditArticle = (that, id, data) => {
     Http({
         method: 'put',
-        url: `/index/edit-article/${id}`,
+        url: `/main/edit-article/${id}`,
         params: data
     }, (response) => {
         that.$message.success('编辑成功');
@@ -54,7 +54,7 @@ const putEditArticle = (that, id, data) => {
 const deleteDeletArticle = (that, id) => {
     Http({
         method: 'delete',
-        url: `/index/delete-article/${id}`
+        url: `/main/delete-article/${id}`
     }, (response) => {
         that.$message.success('删除成功');
         let data = {
@@ -71,7 +71,7 @@ const deleteDeletArticle = (that, id) => {
 const getComment = (that, id, data) => {
     Http({
         method: 'get',
-        url: `/index/comment/${id}`,
+        url: `/main/comment/${id}`,
         params: data
     }, (response) => {
         that.translateDataToTree(response.data.message);
@@ -84,7 +84,7 @@ const getComment = (that, id, data) => {
 const postAddComment = (that, id, data) => {
     Http({
         method: 'post',
-        url: `/index/add-comment/${id}`,
+        url: `/main/add-comment/${id}`,
         params: data
     }, (response) => {
         that.$message.success('评论成功');
@@ -101,7 +101,7 @@ const postAddComment = (that, id, data) => {
 const getIndexToken = (that) => {
     Http({
         method: 'get',
-        url: `/index/token`
+        url: `/main/token`
     }, (response) => {
         that.qiniuForm.token = response.data.uploadToken;
     }, (error) => {

@@ -17,10 +17,10 @@ app.use(statics(
     path.join(__dirname, staticPath)
 ));
 let router = new Router();
-let index = require('./src/appApi/main.js');
-let messageBoard = require('./src/appApi/message-board.js');
-let knowledgePoint = require('./src/appApi/knowledge-point.js');
-router.use('/index', index.routes());
+let main = require('./src/api/main.js');
+let messageBoard = require('./src/api/message-board.js');
+let knowledgePoint = require('./src/api/knowledge-point.js');
+router.use('/main', main.routes());
 router.use('/message-board', messageBoard.routes());
 router.use('/knowledge-point', knowledgePoint.routes());
 app.use(router.routes());
