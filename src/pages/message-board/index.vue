@@ -2,7 +2,7 @@
     <!-- 留言板 -->
     <main class="message-board">
         <h3 class="leave-message">留言板</h3>
-        <div class="content">
+        <div class="content-img">
             <p>
                 <img src="../../images/With-love-for-life.jpg" alt="" width="100%">
             </p>
@@ -30,7 +30,7 @@ export default {
             commentList: [],
             commentListPage: {
                 page: 1,
-                total: 20
+                total: 0
             },
             page: 1
         };
@@ -135,6 +135,7 @@ export default {
 @import "../../scss/my-element.scss";
 .message-board {
     width: 1040px;
+     min-height: calc(100vh - 170px);
     margin: 20px auto;
     background-color: #fff;
     .leave-message {
@@ -145,7 +146,8 @@ export default {
     .title {
         text-align: center;
     }
-    .content {
+    .content-img {
+        height: 400px;
         padding: 0 20px;
         .text {
             text-indent: 2em;

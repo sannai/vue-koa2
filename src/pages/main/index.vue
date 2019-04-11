@@ -19,8 +19,8 @@ export default {
 <style  lang='scss'>
 .main {
     display: flex;
-    min-height: calc(100vh - 160px);
+    min-height: calc(100vh);
     width: 1040px;
-    margin: 20px auto 0;
+    margin: 20px auto;
 }
 </style>

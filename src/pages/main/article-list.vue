@@ -127,7 +127,7 @@ export default {
     box-sizing: border-box;
     width: 1040px;
     margin: 20px auto;
-    min-height: calc(100vh - 180px);
+    min-height: calc(100vh - 170px);
     background-color: #fff;
     padding: 20px;
     .header {
