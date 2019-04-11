@@ -30,7 +30,7 @@
                 </svg>
                 <span class="text">留言</span>
             </el-menu-item>
-            <el-menu-item index="5" class="navbar-list" @click="handleClickToRoute('/article/list')">
+            <el-menu-item index="5" class="navbar-list" @click="handleClickToRoute('/article')">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-liebiao2"></use>
                 </svg>

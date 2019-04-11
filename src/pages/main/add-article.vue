@@ -112,8 +112,8 @@ export default {
                 token: "",
                 uploadUrl: ""
             },
-            domain: "http://upload.qiniup.com", //华北地址
-            uploadUrl: "http://v.zzp96.cn", //存储对象地址
+            domain: "https://upload.qiniup.com", //华北地址
+            uploadUrl: "https://v.zzp96.cn", //存储对象地址
             routeText: "",
             isclick: true,
             isCeiling: false //吸顶

@@ -26,7 +26,7 @@ export default {
     methods: {
         handleClickLogo() {
             this.$router.push({
-                path: "/index"
+                path: "/"
             });
         }
     }

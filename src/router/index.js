@@ -17,30 +17,26 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/index'
-        },
-        {
-            path: '',
             name: 'main',
             component: Main,
             children: [
                 {
-                    path: 'index',
+                    path: '',
                     name: 'index',
                     component: SidebarLeft
                 },
                 {
-                    path: 'artcle-detail/:id',
+                    path: 'article/:id',
                     name: 'artcle-detail',
                     component: ArtcleDetails
                 }
             ]
         },
-        {
-            path: '/classify',
-            name: 'classify',
-            component: Classify
-        },
+        // {
+        //     path: '/classify',
+        //     name: 'classify',
+        //     component: Classify
+        // },
         {
             path: '/message-board',
             name: 'message-board',
@@ -50,10 +46,9 @@ export default new Router({
             path: '/article',
             name: 'Article',
             component: Article,
-            redirect: '/article/list',
             children: [
                 {
-                    path: 'list',
+                    path: '',
                     name: 'article-list',
                     component: ArticleList
                 },
@@ -67,11 +62,6 @@ export default new Router({
                     component: AddArticle
                 }
             ]
-        },
-        {
-            path: '/chat',
-            name: 'chat',
-            component: ChatIndex
         }
     ]
 });
