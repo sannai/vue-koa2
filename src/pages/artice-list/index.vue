@@ -1,8 +1,14 @@
 <template>
+    <!-- 列表 -->
     <main class="articde-main">
         <header class="header">
             <!-- <router-link to="/add-article"> -->
             <el-button type="primary" icon="el-icon-plus" @click="handleFunct('添加')">新增文章</el-button>&emsp;
+            <div class="select">
+                <el-input placeholder=" 请输入内容" v-model="keyWord" class="input-with-select">
+                    <el-button slot="append" icon="el-icon-search" @click="handleSelect"></el-button>
+                </el-input>
+            </div>
             <!-- </router-link>&emsp; -->
             <!-- <el-input placeholder="请输入内容" v-model="keyWord" class="input-select">
                 <el-button slot="append" icon="el-icon-search" @click="handleSelect"></el-button>
@@ -48,11 +54,14 @@
 <script>
 import { mapState } from "vuex";
 import { getArticleList, deleteDeletArticle } from "@/api/main";
+import { articleSelect } from "@/utils/articleSelect";
 import MyTag from "@/components/my-tag";
 export default {
     data() {
         return {
-            article: {}
+            article: {},
+            keyWord: "",
+            isclick: true
         };
     },
     created() {
@@ -69,6 +78,11 @@ export default {
         })
     },
     methods: {
+        //搜索
+        handleSelect() {
+            articleSelect.handleSelect(this, getArticleList);
+        },
+        //分页
         handleCurrentChange(val) {
             let data = {
                 page: val,
@@ -76,6 +90,7 @@ export default {
             };
             getArticleList(this, data);
         },
+        //添加/编辑/删除
         handleFunct(text, row) {
             if (text === "删除") {
                 this.$confirm("此操作将删除该文章, 是否继续?", "提示", {
@@ -98,19 +113,13 @@ export default {
                     });
             } else if (text === "添加") {
                 this.$router.push({
-                    name: "ArticleAdd",
-                    query: {
-                        text: "添加"
-                    }
+                    name: "ArticleAdd"
                 });
             } else if (text === "编辑") {
                 this.$router.push({
                     name: "ArticleEdit",
                     params: {
                         id: row._id
-                    },
-                    query: {
-                        text: "编辑"
                     }
                 });
             }
@@ -127,7 +136,7 @@ export default {
     box-sizing: border-box;
     width: 1040px;
     margin: 20px auto;
-    min-height: calc(100vh - 170px);
+    min-height: calc(100vh - 140px);
     background-color: #fff;
     padding: 20px;
     .header {

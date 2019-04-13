@@ -7,14 +7,13 @@ router.get("/list", async (ctx) => {
     let page = Number(ctx.query.page);
     let limit = Number(ctx.query.limit);
     let total = await messageBoard.find().count();
-    await messageBoard.aggregate([
-        {
+    await messageBoard.aggregate([{
             $sort: {
                 "createDate": -1
             }
         },
         {
-            $skip: (page-1)*limit
+            $skip: (page - 1) * limit
         },
         {
             $limit: limit

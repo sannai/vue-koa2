@@ -20,7 +20,7 @@ module.exports = {
         semi: ["error", "always"],
         "no-multi-spaces": 1, // 不能用多余的空格
         "comma-dangle": [2, "never"], // 对象字面量项尾不能有逗号
-        "eqeqeq": [2, "allow-null"], 
+        "eqeqeq": [2, "allow-null"],
         "key-spacing": [
             1,
             {
@@ -46,6 +46,5 @@ module.exports = {
         ],
         "no-use-before-define": [1, "nofunc"], // 未定义前不能使用
         eqeqeq: 1, // 必须使用全等
-        indent: ["error", 4]
     }
 };

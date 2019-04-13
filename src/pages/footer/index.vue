@@ -1,14 +1,16 @@
 <template>
     <footer class="footers">
-        <section class="box-md">
-            <p>
-                <a href="">© 2019 zzp博客</a>
-            </p>
-            <p>
-                <a href="">部署在阿里云 | 粤ICP备19000813号-1 | </a>
-                <a href="">由七牛云储存提供 CDN 加速</a>
-            </p>
-        </section>
+        <p>
+            Design by &emsp;|&emsp;
+            <router-link to="/">疯一样个人博客</router-link> &emsp;|&emsp;
+            备案号：
+            <router-link to="/">粤ICP备19000813号-1</router-link>
+            &emsp;|&emsp;
+            云储存：七牛云提供 CDN 加速
+        </p>
+        <p>
+            联系我：扫二维码
+        </p>
     </footer>
 </template>
 
@@ -23,21 +25,10 @@ export default {
 <style  lang='scss'>
 .footers {
     height: 50px;
-    position: relative;
-    background-color: #24bebe;
-    .box-md {
-        width: 1040px;
-        height: 100%;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        p {
-            a {
-                color: #fff;
-                font-size: 14px;
-            }
-        }
+    text-align: center;
+    padding: 20px 0 10px 0;
+    p:last-child {
+        margin-top: 10px;
     }
 }
 </style>

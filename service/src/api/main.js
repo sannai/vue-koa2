@@ -11,37 +11,37 @@ router.get("/list", async ctx => {
     let keyWord = ctx.query.keyWord ? ctx.query.keyWord : '';
     let articleList = mongoose.model("articleList");
     await articleList.aggregate([{
-        $match: {
-            title: {
-                $regex: keyWord
+            $match: {
+                title: {
+                    $regex: keyWord
+                }
             }
+        },
+        {
+            $lookup: {
+                from: "comment",
+                localField: "_id",
+                foreignField: "aticleId",
+                as: 'commentList'
+            }
+        },
+        {
+            $project: {
+                __v: 0,
+                content: 0
+            }
+        },
+        {
+            $sort: {
+                createDate: -1
+            }
+        },
+        {
+            $skip: (page - 1) * limit
+        },
+        {
+            $limit: limit
         }
-    },
-    {
-        $lookup: {
-            from: "comment",
-            localField: "_id",
-            foreignField: "aticleId",
-            as: 'commentList'
-        }
-    },
-    {
-        $project: {
-            __v: 0,
-            content: 0
-        }
-    },
-    {
-        $sort: {
-            createDate: -1
-        }
-    },
-    {
-        $skip: (page - 1) * limit
-    },
-    {
-        $limit: limit
-    }
     ]).exec().then((val) => {
         val.forEach((item, index) => {
             item.commentList.forEach(t => {
@@ -68,16 +68,16 @@ router.get("/article-detail/:id", async ctx => {
     let article = mongoose.model("articleList");
     //关联查询
     await article.aggregate([{
-        $match: {
-            _id: mongoose.Types.ObjectId(ctx.params.id)
-        }
-    },
-    {
-        $project: {
-            __v: 0
-        }
-    }
-    ])
+                $match: {
+                    _id: mongoose.Types.ObjectId(ctx.params.id)
+                }
+            },
+            {
+                $project: {
+                    __v: 0
+                }
+            }
+        ])
         .exec()
         .then((val) => {
             ctx.body = {
@@ -125,8 +125,8 @@ router.delete("/delete-article/:id", async (ctx) => {
     let addArticle = mongoose.model("articleList");
     let comment = mongoose.model("comment");
     await addArticle.remove({
-        _id: ctx.params.id
-    })
+            _id: ctx.params.id
+        })
         .then(async (res) => {
             await comment.remove({
                 aticleId: ctx.params.id
@@ -181,24 +181,24 @@ router.get("/comment/:id", async ctx => {
     });
 
     await article.aggregate([{
-        $match: {
-            aticleId: mongoose.Types.ObjectId(ctx.params.id)
+            $match: {
+                aticleId: mongoose.Types.ObjectId(ctx.params.id)
+            }
+        },
+        {
+            $unwind: "$content"
+        },
+        {
+            $sort: {
+                "content.createDate": -1
+            }
+        },
+        {
+            $skip: (page - 1) * limit
+        },
+        {
+            $limit: limit
         }
-    },
-    {
-        $unwind: "$content"
-    },
-    {
-        $sort: {
-            "content.createDate": -1
-        }
-    },
-    {
-        $skip: (page - 1) * limit
-    },
-    {
-        $limit: limit
-    }
     ]).then(res => {
         let total = totalData[0].content.length;
         ctx.body = {

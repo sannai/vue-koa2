@@ -43,6 +43,7 @@ export default {
             limit: 10
         };
         getArticleList(this, data);
+        this.$store.commit("handleIsSelect", true);
     },
     computed: {
         ...mapState({
@@ -76,6 +77,7 @@ export default {
         padding: 20px;
         border-radius: 4px;
         border: 1px solid #f7f7f7;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
         cursor: pointer;
         .title {
             font-size: 30px;
@@ -111,13 +113,14 @@ export default {
         }
         .introduction {
             margin: 10px 0;
-
             p {
                 height: 250px;
-            }
-            img {
-                width: 100%;
-                height: 100%;
+                overflow: hidden;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    transition: all 0.5s;
+                }
             }
         }
         .content-item-actions {
@@ -127,7 +130,15 @@ export default {
         }
     }
     .item-wrap:hover {
-        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        .introduction {
+            p {
+                overflow: hidden;
+                img {
+                    transform: scale(1.1);
+                    transition: all 0.5s;
+                }
+            }
+        }
     }
     .not-data {
         @include my-display();

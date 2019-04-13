@@ -120,9 +120,8 @@ export default {
         };
     },
     created() {
-        this.routeText = this.$route.query.text;
-        console.log(this.$route.params);
-        if (this.$route.query.text === "添加") {
+        this.routeText = this.$route.name === "ArticleAdd" ? "添加" : "编辑";
+        if (this.routeText === "添加") {
             this.article = {
                 content: "",
                 title: "",
@@ -132,7 +131,7 @@ export default {
         this.qiniuForm.uploadUrl = this.uploadUrl;
         this.qiniuForm.key =
             new Date().getTime() + "" + Math.floor(Math.random() * 1000);
-        if (this.$route.query.text === "编辑") {
+        if (this.routeText === "编辑") {
             getArtcleDetails(this, this.$route.params.id);
         }
     },

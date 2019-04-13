@@ -1,7 +1,7 @@
 const state = {
-    count: 0,
     articleList: [],
-    articleListPage: {}
+    articleListPage: {},
+    isSelect: true
 };
 const getters = {
 
@@ -13,6 +13,9 @@ const mutations = {
     handleArticleList(state, payload) {
         state.articleList = payload.data;
         state.articleListPage = payload.page;
+    },
+    handleIsSelect(state, payload) {
+        state.isSelect = payload;
     }
 };
 

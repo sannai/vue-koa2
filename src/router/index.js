@@ -1,46 +1,52 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+
+//首页
 import Main from '@/pages/main';
 import SidebarLeft from '@/pages/main/sidebar-left';
 import ArtcleDetail from '@/pages/main/artcle-detail';
-import AddArticle from '@/pages/main/add-article';
-import Article from '@/pages/main/article';
-import ArticleList from '@/pages/main/article-list';
-import ChatIndex from '@/pages/chatroom';
-import MessageBoard from '@/pages/message-board';
-import Classify from '@/pages/classify';
+import ArticleView from '@/pages/main/article-view';
+
+//留言
+import Message from '@/pages/message';
+//列表
+import ArticleList from '@/pages/artice-list';
+import AddArticle from '@/pages/artice-list/new-article';
+import ArticleViewList from '@/pages/artice-list/article-view';
 
 Vue.use(Router);
 
 export default new Router({
     mode: 'history',
-    routes: [
-        {
+    routes: [{
             path: '/',
-            component: Main,
-            children: [
-                {
+            name: 'index',
+            component: Main
+        },
+        {
+            path: '/index',
+            component: ArticleView,
+            children: [{
                     path: '',
-                    name: 'index',
+                    name: 'idx',
                     component: SidebarLeft
                 },
                 {
-                    path: 'article/:id',
+                    path: 'artcle-detail/:id',
                     name: 'ArtcleDetail',
                     component: ArtcleDetail
                 }
             ]
         },
         {
-            path: '/message-board',
-            name: 'MessageBoard',
-            component: MessageBoard
+            path: '/message',
+            name: 'Message',
+            component: Message
         },
         {
             path: '/article',
-            component: Article,
-            children: [
-                {
+            component: ArticleViewList,
+            children: [{
                     path: '',
                     name: 'ArticleList',
                     component: ArticleList

@@ -6,7 +6,9 @@
                 <my-tag :key="item.id">{{item.name}}</my-tag>
             </template>
             <div class="introduction" v-html="article.introduction"></div>
-            <h4>内容区</h4>
+            <h4>
+                内容区
+            </h4>
             <div class="content" v-html="article.content"></div>
         </a>
         <comment-area :commentList="commentList" :commentListPage="commentListPage" @handleAddMessageBoard="handleAddMessageBoard" @handleScroll="handleScroll" :title="'留言'"></comment-area>
@@ -29,7 +31,7 @@ export default {
             commentList: [],
             commentListPage: {
                 page: 1,
-                total: 20
+                total: 0
             },
             page: 1
         };
@@ -43,6 +45,7 @@ export default {
             limit: 10
         };
         getComment(this, this.$route.params.id, data);
+        this.$store.commit("handleIsSelect", false);
     },
     computed: {
         //评论
@@ -55,12 +58,6 @@ export default {
         }
     },
     methods: {
-        // handleClose(item, index) {
-        //     console.log(item, index, 666);
-        // },
-        // handleClick(item, index) {
-        //     console.log(item, index, 777);
-        // },
         handleScroll(val) {
             if (
                 Math.round(val.scrollTop) + val.clientHeight ===

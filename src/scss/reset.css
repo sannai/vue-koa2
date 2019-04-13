@@ -1,67 +1,76 @@
 html body {
-    height: 100%;
-  }
-  a{
-    text-decoration: none;
-  }
-  body,
-  dl,
-  dt,
-  dd,
-  ul,
-  ol,
-  li,
-  pre,
-  form,
-  fieldset,
-  input,
-  p,
-  blockquote,
-  th,
-  td,
-  div {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  h1,
-  h2,
-  h3,
-  h4,
-  h4,
-  h5 {
-    margin: 0;
-    padding: 0;
-  }
-  body {
-    background-color: #f0f0f5;
-    color: #666;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 12px;
-    padding: 0;
-  }
-  fieldset,
-  img {
-    border: 0 none;
-  }
-  fieldset {
-    margin: 0;
-    padding: 0;
-  }
-  legend {
-    display: none;
-  }
-  em,
-  strong,
-  th,
-  i {
-    font-style: normal;
-    font-weight: 400;
-  }
-  ol,
-  ul {
-    list-style-image: none;
-    list-style-position: outside;
-    list-style-type: none;
-    list-style: none;
-  }
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+body,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+input,
+p,
+blockquote,
+th,
+td,
+div {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h4,
+h5 {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font: 15px "Microsoft YaHei", Arial, Helvetica, sans-serif;
+  color: #555;
+  background: #efefef;
+  font-size: 12px;
+  padding: 0;
+}
+
+fieldset,
+img {
+  border: 0 none;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  display: none;
+}
+
+em,
+strong,
+th,
+i {
+  font-style: normal;
+  font-weight: 400;
+}
+
+ol,
+ul {
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  list-style: none;
+}

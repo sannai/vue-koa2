@@ -1,5 +1,5 @@
 <template>
-    <!-- 留言板 -->
+    <!-- 留言 -->
     <main class="message-board">
         <h3 class="leave-message">留言板</h3>
         <div class="content-img">
@@ -135,7 +135,7 @@ export default {
 @import "../../scss/my-element.scss";
 .message-board {
     width: 1040px;
-     min-height: calc(100vh - 170px);
+    min-height: calc(100vh - 170px);
     margin: 20px auto;
     background-color: #fff;
     .leave-message {

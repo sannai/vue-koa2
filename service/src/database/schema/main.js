@@ -16,14 +16,15 @@ const articleListSchema = new Schema({
     },
     knowledge: { //知识点
         type: Array,
-        default: [
-            {
-                id: 1,
-                name: 'javascript'
-            }
-        ]
+        default: [{
+            id: 1,
+            name: 'javascript'
+        }]
     },
-    createDate: { type: Date, default: Date.now } //创建时间
+    createDate: {
+        type: Date,
+        default: Date.now
+    } //创建时间
 });
 
 //文章-评论
@@ -34,29 +35,30 @@ const commentSchema = new Schema({
     userName: {
         type: String
     },
-    content: [
-        {
-            replyName: String,
-            commentName: String,
-            commentContent: String,
-            commentPid: Schema.Types.ObjectId,
-            createDate: {
-                type: Date, default: Date.now
-            },
-            hierarchy: {
-                type: Number,
-                default: 1
-            },
-            count: {
-                type: Number,
-                default: 0
-            }
+    content: [{
+        replyName: String,
+        commentName: String,
+        commentContent: String,
+        commentPid: Schema.Types.ObjectId,
+        createDate: {
+            type: Date,
+            default: Date.now
+        },
+        hierarchy: {
+            type: Number,
+            default: 1
+        },
+        count: {
+            type: Number,
+            default: 0
         }
-    ],
-    createDate: { type: Date, default: Date.now }
+    }],
+    createDate: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 //发布模型
 mongoose.model('articleList', articleListSchema, 'articleList');
 mongoose.model('comment', commentSchema, 'comment');
-

@@ -21,7 +21,7 @@ exports.chat = (io) => {
                     username: data.username
                 });
                 /*登录成功*/
-                console.log(data,123);
+                console.log(data, 123);
                 socket.emit('loginSuccess', data);
                 /*向所有连接的客户端广播add事件*/
                 io.sockets.emit('add', data);
@@ -32,18 +32,18 @@ exports.chat = (io) => {
             console.log(data, 66, users);
 
         });
-        socket.on('disconnect',function(){
+        socket.on('disconnect', function () {
             /*向所有连接的客户端广播leave事件*/
-            io.sockets.emit('leave',username);
-            users.map(function(val,index){
-                if(val.username === username){
-                    users.splice(index,1);
+            io.sockets.emit('leave', username);
+            users.map(function (val, index) {
+                if (val.username === username) {
+                    users.splice(index, 1);
                 }
             });
         });
-        socket.on('sendMessage',function(data){
-            console.log(data,45);
-            io.sockets.emit('receiveMessage',data);
+        socket.on('sendMessage', function (data) {
+            console.log(data, 45);
+            io.sockets.emit('receiveMessage', data);
         });
     });
 };

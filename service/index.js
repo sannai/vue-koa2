@@ -8,8 +8,13 @@ const bodyParser = require('koa-bodyparser'); //获取数据
 const cors = require('koa2-cors'); //跨域
 const cpmpress = require('koa-compress'); //开启gzip
 const staticPath = './static';
-const { connect, initSchemas } = require('./src/database/init');
-const options = { threshold: 2048 };
+const {
+    connect,
+    initSchemas
+} = require('./src/database/init');
+const options = {
+    threshold: 2048
+};
 app.use(cpmpress(options));
 app.use(bodyParser());
 app.use(cors());
@@ -26,7 +31,7 @@ router.use('/knowledge-point', knowledgePoint.routes());
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-;//立即执行数据库链接
+; //立即执行数据库链接
 (async () => {
     connect();
     initSchemas();
