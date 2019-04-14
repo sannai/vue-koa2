@@ -14,6 +14,9 @@ import ArticleList from '@/pages/artice-list';
 import AddArticle from '@/pages/artice-list/new-article';
 import ArticleViewList from '@/pages/artice-list/article-view';
 
+//关于我
+import About from '@/pages/about';
+
 Vue.use(Router);
 
 export default new Router({
@@ -61,6 +64,11 @@ export default new Router({
                     component: AddArticle
                 }
             ]
+        },
+        {
+            path: '/about',
+            name: 'About',
+            component: About
         }
     ]
 });

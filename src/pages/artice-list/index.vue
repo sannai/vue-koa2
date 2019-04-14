@@ -147,7 +147,7 @@ export default {
         }
     }
     .section {
-        min-height: calc(100vh - 320px);
+        min-height: calc(100vh - 280px);
     }
     .footer {
         text-align: center;

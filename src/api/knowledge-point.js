@@ -7,8 +7,7 @@ const getKnowledgePoint = (that) => {
         url: `/knowledge-point/list`
     }, (response) => {
         that.knowledgePointList = response.data.message.data;
-    }, (error) => {
-    });
+    }, (error) => {});
 };
 
 export {

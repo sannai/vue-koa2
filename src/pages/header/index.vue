@@ -4,7 +4,7 @@
         <nav class="navs">
             <h1>
                 <router-link to="/">
-                    疯一样个人博客
+                    牵着蜗牛去旅行
                 </router-link>
             </h1>
             <ul class="navigation">
@@ -44,12 +44,12 @@ export default {
                     id: 4,
                     name: "列表",
                     pathName: "ArticleList"
+                },
+                {
+                    id: 5,
+                    name: "关于",
+                    pathName: "About"
                 }
-                // {
-                //     id: 5,
-                //     name: "关于",
-                //     pathName: "ArticleList"
-                // }
             ],
             knowledgePointList: []
         };
