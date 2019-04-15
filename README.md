@@ -3,9 +3,8 @@
 
 使用Vue+node+MongoDB+WebPack
 
-安装vue，node环境就能使用（因为我还在开发过程哈哈哈）
+安装vue，node环境就能使用
 
-最初想法：熟悉前后端端开发（本人技术不好只能多学习）
 
 完成
 
