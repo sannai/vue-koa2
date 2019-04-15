@@ -1,5 +1,5 @@
 # vue-koa2项目
-预览地址http://www.zzp96.cn
+预览地址https://www.zzp96.cn
 
 使用Vue+node+MongoDB+WebPack
 
