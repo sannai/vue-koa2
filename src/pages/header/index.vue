@@ -28,13 +28,13 @@ export default {
                 {
                     id: 1,
                     name: "首页",
-                    pathName: "idx"
+                    pathName: "index"
                 },
-                // {
-                //     id: 2,
-                //     name: "分类",
-                //     pathName: ""
-                // },
+                {
+                    id: 2,
+                    name: "文章",
+                    pathName: "Article"
+                },
                 {
                     id: 3,
                     name: "留言",
@@ -55,7 +55,7 @@ export default {
         };
     },
     created() {
-        getKnowledgePoint(this);
+        // getKnowledgePoint(this);
     },
     methods: {
         handleClickLogo() {
