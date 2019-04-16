@@ -1,6 +1,7 @@
 <template>
     <section class="artcle-detail">
         <a class="item-wrap">
+            {{typeof article}}
             <h3 class="title">{{article.title}}</h3>
             <template v-for="item in article.knowledge">
                 <my-tag :key="item.id">{{item.name}}</my-tag>
@@ -18,6 +19,7 @@
 </template>
 
 <script>
+import "highlight.js/styles/atom-one-light.css";
 import { getArtcleDetails, postAddComment, getComment } from "@/api/main.js";
 import SidebarLeft from "./sidebar-left";
 import SidebarRight from "./sidebar-right";
@@ -27,7 +29,7 @@ import MyTag from "@/components/my-tag";
 export default {
     data() {
         return {
-            article: [],
+            article: {},
             commentList: [],
             commentListPage: {
                 page: 1,
@@ -168,7 +170,7 @@ export default {
         h4 {
             font-size: 16px;
             text-align: center;
-            margin: 16px 0;
+            margin-top: 20px;
         }
         .introduction {
             margin: 10px 0;
@@ -181,10 +183,20 @@ export default {
             }
         }
         .content {
-            text-indent: 24px;
             font-size: 14px;
             img {
                 width: 100%;
+            }
+            .ql-syntax {
+                background-color: #282c34;
+                .hljs-tag {
+                    display: inline-flex;
+                    flex-wrap: wrap;
+                }
+                .hljs-comment {
+                    display: inline-flex;
+                    flex-wrap: wrap;
+                }
             }
         }
     }

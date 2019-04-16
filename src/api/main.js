@@ -10,8 +10,7 @@ const getArticleList = (that, data) => {
         params: data
     }, (response) => {
         that.$store.commit('handleArticleList', response.data.message);
-    }, (error) => {
-    });
+    }, (error) => {});
 };
 
 //文章-添加
@@ -22,8 +21,7 @@ const postAddArticle = (that, data) => {
         params: data
     }, (response) => {
         that.$message.success('添加成功');
-    }, (error) => {
-    });
+    }, (error) => {});
 };
 
 //文章-详情
@@ -33,8 +31,7 @@ const getArtcleDetails = (that, id) => {
         url: `/main/article-detail/${id}`
     }, (response) => {
         that.article = response.data.message[0];
-    }, (error) => {
-    });
+    }, (error) => {});
 };
 
 //文章-编辑
@@ -46,8 +43,7 @@ const putEditArticle = (that, id, data) => {
     }, (response) => {
         that.$message.success('编辑成功');
         // getArticleList(that);
-    }, (error) => {
-    });
+    }, (error) => {});
 };
 
 //文章-删除
@@ -63,8 +59,7 @@ const deleteDeletArticle = (that, id) => {
             limit: 10
         };
         getArticleList(that, data);
-    }, (error) => {
-    });
+    }, (error) => {});
 };
 
 //评论-详情
@@ -93,8 +88,7 @@ const postAddComment = (that, id, data) => {
             limit: 10
         };
         getComment(that, id, datas);
-    }, (error) => {
-    });
+    }, (error) => {});
 };
 
 //七牛云
@@ -104,8 +98,7 @@ const getIndexToken = (that) => {
         url: `/main/token`
     }, (response) => {
         that.qiniuForm.token = response.data.uploadToken;
-    }, (error) => {
-    });
+    }, (error) => {});
 };
 
 export {

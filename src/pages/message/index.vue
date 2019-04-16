@@ -13,7 +13,7 @@
                 请与我联系！
             </p>
         </div>
-        <comment-area :commentList="commentList" :commentListPage="commentListPage" @handleAddMessageBoard="handleAddMessageBoard" @handleCurrentChange="handleCurrentChange" @handleScroll="handleScroll" :title="'留言'"></comment-area>
+        <comment-area :commentList="commentList" :commentListPage="commentListPage" @handleAddMessageBoard="handleAddMessageBoard" @handleScroll="handleScroll" :title="'留言'"></comment-area>
     </main>
 </template>
 
