@@ -16,7 +16,7 @@
             <el-form-item label="内容">
                 <el-upload class="avatar-uploader" :action="domain" :data="qiniuForm" :show-file-list="false" :on-success="uploadEditorSuccess" :on-error="uploadEditorError" :before-upload="beforeEditorUpload">
                 </el-upload>
-                <quill-editor class="editor" :class="{'ceiling': isCeiling}" v-model="article.content" @focus="onEditorFocus('content')" @blur="handleBlur" ref="content" :options="editorOption2">
+                <quill-editor class="editor" :class="{'ceiling': isCeiling}" v-model="article.content" @focus="onEditorFocus('content')" @blur="handleBlur" ref="content" :options="editorOption2" >
                 </quill-editor>
             </el-form-item>
         </el-form>

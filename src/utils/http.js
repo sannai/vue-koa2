@@ -17,7 +17,7 @@ instance.interceptors.request.use(
     }
 );
 
-export default (data = {}, success = response => { }, error = error => { }) => {
+export default (data = {}, success = response => {}, error = error => {}) => {
     instance(data)
         .then(success)
         .catch(error);

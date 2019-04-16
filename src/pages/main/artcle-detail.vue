@@ -1,6 +1,7 @@
 <template>
     <section class="artcle-detail">
         <a class="item-wrap">
+            {{typeof article}}
             <h3 class="title">{{article.title}}</h3>
             <template v-for="item in article.knowledge">
                 <my-tag :key="item.id">{{item.name}}</my-tag>
@@ -9,7 +10,7 @@
             <h4>
                 内容区
             </h4>
-            <div class="content" v-html="article.content"></div>
+            <div class="content" v-html="article.content" v-highlight></div>
         </a>
         <comment-area :commentList="commentList" :commentListPage="commentListPage" @handleAddMessageBoard="handleAddMessageBoard" @handleScroll="handleScroll" :title="'留言'"></comment-area>
         <back-to-top></back-to-top>
@@ -19,6 +20,7 @@
 
 <script>
 import { getArtcleDetails, postAddComment, getComment } from "@/api/main.js";
+import "highlight.js/styles/default.css"; //样式文件
 import SidebarLeft from "./sidebar-left";
 import SidebarRight from "./sidebar-right";
 import BackToTop from "@/components/back-to-top";
@@ -27,7 +29,7 @@ import MyTag from "@/components/my-tag";
 export default {
     data() {
         return {
-            article: [],
+            article: {},
             commentList: [],
             commentListPage: {
                 page: 1,
@@ -37,6 +39,7 @@ export default {
         };
     },
     created() {
+        // hljs.initHighlightingOnLoad();
         //文章详情
         getArtcleDetails(this, this.$route.params.id);
         //文章评论
