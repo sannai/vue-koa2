@@ -2,7 +2,7 @@
     <footer class="footers">
         <p>
             Design by &emsp;|&emsp;
-            <router-link to="/">疯一样个人博客</router-link> &emsp;|&emsp;
+            <router-link to="/">牵着蜗牛去旅行</router-link> &emsp;|&emsp;
             备案号：
             <router-link to="/">粤ICP备19000813号-1</router-link>
             &emsp;|&emsp;
