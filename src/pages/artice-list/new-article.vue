@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import "highlight.js/styles/atom-one-light.css";
+import hljs from "highlight.js";
 import {
     postAddArticle,
     getIndexToken,
@@ -34,12 +36,7 @@ import {
     getArtcleDetails,
     putEditArticle
 } from "@/api/main.js";
-// import { quillEditor } from "vue-quill-editor";
 import { Quill } from "vue-quill-editor";
-// import { ImageDrop } from "quill-image-drop-module";
-// import { ImageResize } from "quill-image-resize-module";
-// Quill.register("modules/imageResize", ImageResize);
-// Quill.register("modules/imageDrop", ImageDrop);
 import imageUrl from "../../images/1.png";
 //自定义编辑器的工作条
 const toolbarOptions = [["image"]];
@@ -103,6 +100,9 @@ export default {
                                 }
                             }
                         }
+                    },
+                    syntax: {
+                        highlight: text => hljs.highlightAuto(text).value
                     }
                 }
             },

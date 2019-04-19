@@ -29,6 +29,7 @@ const router = new Router({
         component: Home,
         children: [{
                 path: '',
+                redirect: "/index",
                 component: Main
             },
             {

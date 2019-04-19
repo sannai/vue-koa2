@@ -1,10 +1,10 @@
-# vue-koa2项目
+# vue-koa2 项目
+
 预览地址https://www.zzp96.cn
 
-使用Vue+node+MongoDB+WebPack
+使用 Vue+node+MongoDB+WebPack
 
-安装vue，node环境就能使用
-
+安装 vue，node 环境就能使用
 
 完成
 
@@ -18,13 +18,9 @@
 
 5.搜索
 
-
 准备
 
 1.分类
-
-2.导航
-
 
 > A Vue.js project
 
@@ -34,13 +30,10 @@
 
 3.npm build
 
-
-
 > B Node.js project
 
 1.cd service
 
 2.npm install
 
-3. npm start
-
+3.npm start

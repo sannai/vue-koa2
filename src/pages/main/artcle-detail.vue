@@ -10,7 +10,7 @@
             <h4>
                 内容区
             </h4>
-            <div class="content" v-html="article.content" v-highlight></div>
+            <div class="content" v-html="article.content"></div>
         </a>
         <comment-area :commentList="commentList" :commentListPage="commentListPage" @handleAddMessageBoard="handleAddMessageBoard" @handleScroll="handleScroll" :title="'留言'"></comment-area>
         <back-to-top></back-to-top>
@@ -19,8 +19,8 @@
 </template>
 
 <script>
+import "highlight.js/styles/atom-one-light.css";
 import { getArtcleDetails, postAddComment, getComment } from "@/api/main.js";
-import "highlight.js/styles/default.css"; //样式文件
 import SidebarLeft from "./sidebar-left";
 import SidebarRight from "./sidebar-right";
 import BackToTop from "@/components/back-to-top";
@@ -39,7 +39,6 @@ export default {
         };
     },
     created() {
-        // hljs.initHighlightingOnLoad();
         //文章详情
         getArtcleDetails(this, this.$route.params.id);
         //文章评论
@@ -171,7 +170,7 @@ export default {
         h4 {
             font-size: 16px;
             text-align: center;
-            margin: 16px 0;
+            margin-top: 20px;
         }
         .introduction {
             margin: 10px 0;
@@ -184,10 +183,20 @@ export default {
             }
         }
         .content {
-            text-indent: 24px;
             font-size: 14px;
             img {
                 width: 100%;
+            }
+            .ql-syntax {
+                background-color: #282c34;
+                .hljs-tag {
+                    display: inline-flex;
+                    flex-wrap: wrap;
+                }
+                .hljs-comment {
+                    display: inline-flex;
+                    flex-wrap: wrap;
+                }
             }
         }
     }
