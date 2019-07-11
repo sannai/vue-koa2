@@ -2,15 +2,12 @@
     <footer class="footers">
         <p>
             Design by &emsp;|&emsp;
-            <router-link to="/">牵着蜗牛去旅行</router-link> &emsp;|&emsp;
+            <router-link to="/">牵着蜗牛去旅行</router-link>&emsp;|&emsp;
             备案号：
-            <router-link to="/">粤ICP备19000813号-1</router-link>
-            &emsp;|&emsp;
+            <router-link to="/">粤ICP备19000813号-1</router-link>&emsp;|&emsp;
             云储存：七牛云提供 CDN 加速
         </p>
-        <p>
-            联系我：扫二维码
-        </p>
+        <p>联系我：扫二维码</p>
     </footer>
 </template>
 
